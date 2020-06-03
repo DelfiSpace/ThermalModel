@@ -3,21 +3,33 @@ close all
 teta = 0:2*pi/100:2*pi ;
 beta = 0*pi/180 ;
 h = 408E3 ;
-eta = pi/2 ; % nadir facing plate 
+
+% eta = pi ; % nadir facing plate 
 % eta = 0 ; % zenith facing plate
 % eta = pi/2 ; % forward facing plate
 % eta = 3*pi/2 ; % aft facing plate
 
-e = 0 ; % normal in the orbital plane
-% e = pi/2 ; %normal perpendiduclar to the orbital plane
-% Not working
+% Nadir facing plate
+% pol = pi/2 ;
+% azi = pi ;
+% Zenith facing plate
+% pol = pi/2 ;
+% azi = 0 ;
+%Forward facing plate
+pol = 0 ;
+azi = 0 ;
+% North facing plate
+% pol = pi/2 ; 
+% azi = 3*pi/2 ;
+
+eta = acos(cos(azi)*sin(pol)) ;
 
 Fpla = zeros(1,length(teta));
 Falb = zeros(1,length(teta));
 Fs = zeros(1,length(teta));
 
 for i=1:length(teta)
-    [temp1,temp2,temp3] = HeatReceived_perso(94,beta,teta(1,i),h,eta,0.3);
+    [temp1,temp2,temp3] = HeatReceived_perso(94,beta,teta(1,i),h,pol,azi,0.3);
     Fpla(i)=temp1;
     Falb(i)=temp2;
     Fs(i)=temp3;
@@ -28,7 +40,7 @@ hold on
 plot(teta*180/pi,Falb)
 plot(teta*180/pi,Fs)
 
-% Validation for beta=0 and eta=pi (nadir facing plate)
+% Validation for beta=0 and nadir facing plate
 % tetaTest = [0 30 60 90 95 100 110 180 250 260 265 270 300 330 360] ;
 % FplaTest = [210] ;
 % FalbTest = [360 320 180 0 0 0 0 0 0 0 0 0 180 320 360] ;
@@ -37,7 +49,7 @@ plot(teta*180/pi,Fs)
 % plot(tetaTest, FsTest, 'k*')
 % plot([180], FplaTest, 'b*')
 
-% Validation for beta=60 and eta=pi
+% Validation for beta=60 and nadir facing plate
 % tetaTest = [0 30 60 90 100 110 120 132 180 228 240 250 260 270 300 330 360];
 % FplaTest = [210];
 % FalbTest = [180 150 90 0 0 0 0 0 0 0 0 0 0 0 90 150 180];
@@ -46,7 +58,7 @@ plot(teta*180/pi,Fs)
 % plot(tetaTest, FsTest, 'k*')
 % plot([180], FplaTest, 'b*')
 
-% Validation for beta=0 and eta=pi/2
+% Validation for beta=0 and forward facing plate
 tetaTest = [0 30 60 90 250 270 300 330 360];
 FplaTest = [70];
 FalbTest = [110 100 50 0 0 0 50 100 110];
@@ -59,6 +71,6 @@ title('Incident Heat on an oriented plate')
 xlabel('Orbit angle from solar noon (°)')
 ylabel('Incident Heating Flux (W/m^2)')
 legend('Earth IR', 'Albedo', 'Solar radiation')
-str = {'beta=',beta*180/pi, 'eta=',eta*180/pi} ;
+str = {'beta=',beta*180/pi, 'Polar angle=',pol*180/pi, 'Azimuthal angle=',azi*180/pi} ;
 annotation('textbox',[.2 .5 .4 .4],'String',str,'FitBoxToText','on');
 hold off
