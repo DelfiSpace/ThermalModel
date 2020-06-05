@@ -9,6 +9,8 @@ close all
 clearvars
 clc
 
+%% Initialisation
+
 % load phisycal constants needed for simulation
 constants_perso
 
@@ -20,9 +22,13 @@ pocketqube3U;
 
 points = size(inputE, 2);
 
-spinX = 15; % degrees/second
-spinY = 12; % degrees/second
-spinZ = 22; % degrees/second
+spinX = 0; % degrees/second
+spinY = 0; % degrees/second
+spinZ = 0; % degrees/second
+
+% spinX = 15; % degrees/second
+% spinY = 12; % degrees/second
+% spinZ = 22; % degrees/second
 
 t0 = 4.2 - T0;
 
@@ -52,6 +58,7 @@ surfaceSP = zeros(size(inputE, 1), size(inputE, 2));
 
 avgHpower = sum(heat(1:6, 1));
 
+%% Temperature Computation 
 for h = 2 : points
     % calculate the incoming heat power
     heat(1:6, h) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .*  sa ...
@@ -88,6 +95,7 @@ for h = 2 : points
     t(:, h) = states(1:length(hc));
 end
 
+%% Graphs
 if (0)
 
 figure

@@ -1,7 +1,7 @@
 
 close all
 teta = 0:2*pi/100:2*pi ;
-beta = 0*pi/180 ;
+beta = -60*pi/180 ;
 h = 408E3 ;
 
 % eta = pi ; % nadir facing plate 
@@ -16,11 +16,11 @@ h = 408E3 ;
 % pol = pi/2 ;
 % azi = 0 ;
 %Forward facing plate
-pol = 0 ;
-azi = 0 ;
+% pol = 0 ;
+% azi = 0 ;
 % North facing plate
-% pol = pi/2 ; 
-% azi = 3*pi/2 ;
+pol = pi/2 ; 
+azi = 3*pi/2 ;
 
 eta = acos(cos(azi)*sin(pol)) ;
 
@@ -59,10 +59,19 @@ plot(teta*180/pi,Fs)
 % plot([180], FplaTest, 'b*')
 
 % Validation for beta=0 and forward facing plate
-tetaTest = [0 30 60 90 250 270 300 330 360];
-FplaTest = [70];
-FalbTest = [110 100 50 0 0 0 50 100 110];
-FsTest = [0 0 0 0 1295 1370 1190 680 0] ; 
+% tetaTest = [0 30 60 90 250 270 300 330 360];
+% FplaTest = [70];
+% FalbTest = [110 100 50 0 0 0 50 100 110];
+% FsTest = [0 0 0 0 1295 1370 1190 680 0] ; 
+% plot(tetaTest, FalbTest, 'r*')
+% plot(tetaTest, FsTest, 'k*')
+% plot([180], FplaTest, 'b*')
+
+% Validation for beta=-60° and north facing plate
+tetaTest = [0 90 130 180 230 270 360];
+FplaTest = [60];
+FalbTest = [55 0 0 0 0 0 55];
+FsTest = [1185 1185 1185 0 1185 1185 1185] ; 
 plot(tetaTest, FalbTest, 'r*')
 plot(tetaTest, FsTest, 'k*')
 plot([180], FplaTest, 'b*')
