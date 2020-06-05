@@ -11,29 +11,15 @@ a = 149.6E6 ;
 b = 149.58E6 ;
 T = 365 ;
 
-t=-pi:2*pi/T:pi;
-x=a*cos(t(1:length(t)-1));
-y=b*sin(t(1:length(t)-1));
-% plot(x,y)
-% axis equal
-% title('Earth Orbit')
-% hold on
-% plot(0,0,'r*')
-% plot(a*e,0,'r*')
-
-%hold on
 if (day>=3)
-    x_Earth = x(day-2) ;
-    y_Earth = y(day-2) ;
-    % plot(x_Earth,y_Earth,'r*')
+    x_Earth = a*cos(-pi+(day-2)*2*pi/T) ;
+    y_Earth = b*sin(-pi+(day-2)*2*pi/T) ;
 else
-    x_Earth = x(length(x)-day+1) ;
-    y_Earth = y(length(y)-day+1) ;
-    % plot(x_Earth,y_Earth,'r*')
+    x_Earth = a*cos(pi-day*2*pi/T) ;
+    y_Earth = b*sin(pi-day*2*pi/T) ;
 end
 
 distance = sqrt((x_Earth+a*e).^2 + y_Earth.^2) ;
 
-% hold off
 
 end
