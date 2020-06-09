@@ -42,7 +42,9 @@ before_install:
     - git clone https://github.com/MOcov/MOcov.git
     - make -C MOcov install
     
-
 script:
+    - pwd
+    - dir
+    - cd /home/travis/build/DelfiSpace/ThermalModel
     - octave --no-gui --eval "addpath('/home/travis/build/DelfiSpace/MOxUnit/MOxUnit');moxunit_set_path;moxunit_runtests('tests')"
     
