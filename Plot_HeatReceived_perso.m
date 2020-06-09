@@ -1,7 +1,7 @@
 
 close all
 teta = 0:2*pi/100:2*pi ;
-beta = -60*pi/180 ;
+beta = 68.5530*pi/180 ;
 h = 408E3 ;
 
 % eta = pi ; % nadir facing plate 
@@ -68,13 +68,13 @@ plot(teta*180/pi,Fs)
 % plot([180], FplaTest, 'b*')
 
 % Validation for beta=-60° and north facing plate
-tetaTest = [0 90 130 180 230 270 360];
-FplaTest = [60];
-FalbTest = [55 0 0 0 0 0 55];
-FsTest = [1185 1185 1185 0 1185 1185 1185] ; 
-plot(tetaTest, FalbTest, 'r*')
-plot(tetaTest, FsTest, 'k*')
-plot([180], FplaTest, 'b*')
+% tetaTest = [0 90 130 180 230 270 360];
+% FplaTest = [60];
+% FalbTest = [55 0 0 0 0 0 55];
+% FsTest = [1185 1185 1185 0 1185 1185 1185] ; 
+% plot(tetaTest, FalbTest, 'r*')
+% plot(tetaTest, FsTest, 'k*')
+% plot([180], FplaTest, 'b*')
 
 title('Incident Heat on an oriented plate')
 xlabel('Orbit angle from solar noon (°)')

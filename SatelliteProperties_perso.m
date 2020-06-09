@@ -3,15 +3,16 @@
 
 %% Orbital parameters
 h = 500E3 ; %altitude
-i = 97.5 *pi/180 ; %inclination
-beta = 60 *pi/180 ; %beta angle
+RAAN = 0 *pi/180 ; %Right ascension of the ascending node
+i = 97 *pi/180 ; %inclination
+beta = BetaAngle_perso(day,RAAN,i) ; %beta angle
 
 %% Initial orientation of the satellite faces
 pol_X = pi/2 ; %nadir facing plate
 azi_X = pi ;
 pol_Xm = pi-pol_X ;
 if azi_X == 0
-    azi_X = 0;
+    azi_Xm = 0;
 else
     azi_Xm = mod(azi_X+pi,2*pi) ;
 end

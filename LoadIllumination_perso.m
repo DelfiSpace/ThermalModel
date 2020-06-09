@@ -1,16 +1,15 @@
 
-% Computes the illumination data (for now, the results are correct only if
-% the normal to the face is in the orbital plane
+% Computes the illumination data 
 
 % Day of the simulation
 % day = input('What is the day of the simulation? \n') ;
-day = 94 ;
+day = 1 ;
 
 % Load the satellite orbital parameters
 SatelliteProperties_perso
 
 % Number of orbit 
-orbit = 4 ;
+orbit = 14 ;
 
 % Evolution of the orbit angle (teta) during the orbits 
 T_orbit = floor(2*pi*sqrt((Re+h)^3/(G*Me))) ; %orbit period
