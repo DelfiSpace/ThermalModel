@@ -5,7 +5,7 @@
 #
 # We pretend to be java because we need GNU Octave which is not
 # available (as of April 2015)
-
+dist: focal
 language: java
 
 cache:
@@ -43,8 +43,6 @@ before_install:
     - make -C MOcov install
     
 script:
-    - pwd
-    - dir
     - cd /home/travis/build/DelfiSpace/ThermalModel
     - octave --no-gui --eval "addpath('/home/travis/build/DelfiSpace/MOxUnit/MOxUnit');moxunit_set_path;moxunit_runtests('tests')"
     
