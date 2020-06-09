@@ -26,8 +26,17 @@ before_install:
     - travis_retry sudo apt-get -y -qq update
     # get Octave 4,0
     - travis_retry sudo apt-get -y -qq install octave liboctave-dev
+    # install MOxUnit
+    - cd ..
+    - rm -rf MOxUnit
+    - git clone https://github.com/MOxUnit/MOxUnit.git
+    - make -C MOxUnit install
+    # install MOdox
+    - cd ..
+    - rm -rf MOdox
+    - git clone https://github.com/MOdox/MOdox.git
+    - make -C MOdox install
     # install MOcov
-    - pwd
     - cd ..
     - rm -rf MOcov
     - git clone https://github.com/MOcov/MOcov.git
@@ -35,5 +44,5 @@ before_install:
     
 
 script:
-    - octave --no-gui --eval "addpath('~/git/MOxUnit/MOxUnit');moxunit_set_path;moxunit_runtests('tests')"
+    - octave --no-gui --eval "addpath('/home/travis/build/DelfiSpace/MOxUnit/MOxUnit');moxunit_set_path;moxunit_runtests('tests')"
     
