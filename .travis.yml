@@ -29,7 +29,7 @@ before_install:
     #- travis_retry sudo apt-get -y -qq install octave liboctave-dev
     - travis_retry sudo apt-get install flatpak
     - travis_retry sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-    - travis_retry sudo flatpak install flathub org.octave.Octave
+    - travis_retry sudo flatpak install -y flathub org.octave.Octave
     # install MOxUnit
     - cd ..
     - rm -rf MOxUnit
