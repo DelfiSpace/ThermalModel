@@ -48,5 +48,5 @@ before_install:
     
 script:
     - cd /home/travis/build/DelfiSpace/ThermalModel
-    - octave --no-gui --eval "addpath('/home/travis/build/DelfiSpace/MOxUnit/MOxUnit');moxunit_set_path;exit(moxunit_runtests('tests'))"
+    - octave --no-gui --eval "addpath('/home/travis/build/DelfiSpace/MOxUnit/MOxUnit');moxunit_set_path;exit(moxunit_runtests('tests') == 0)"
     
