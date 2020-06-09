@@ -10,5 +10,4 @@ function test_SolarFlux_scalar
     assertTrue(true)
     
 function test_SolarFlux_vector
-    %assertEqual(SolarFlux_perso([1 2 3]),[1 2 3]);
-    assertTrue(true)
+    assertEqual(SolarFlux_perso([1 2 3]),[1 2 3]);
