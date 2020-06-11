@@ -1,5 +1,4 @@
-
-% Computes the illumination data 
+% Computes the illumination data considering the rotation of the satellite
 
 % Day of the simulation
 % day = input('What is the day of the simulation? \n') ;
@@ -50,6 +49,45 @@ for i=1:length(teta1)
    
    [zm(i,2), zm(i,3), zm(i,1)] = HeatReceived_perso(day,beta,teta1(i),h,pol_Zm,azi_Zm,0.3) ;
    zm(i,4) = sum(zm(i,:)) ;
+   
+   % Keep track of the rotation
+%    azi_X = mod(azi_X + spinazi, 2*pi) ;
+%    azi_Y = mod(azi_Y + spinazi, 2*pi) ;
+%    azi_Z = mod(azi_Z + spinazi, 2*pi) ;
+%    azi_Xm = mod(azi_Xm + spinazi, 2*pi) ;
+%    azi_Ym = mod(azi_Ym + spinazi, 2*pi) ;
+%    azi_Zm = mod(azi_Zm + spinazi, 2*pi) ;
+%    
+%    pol_X = pol_X + spinpol ;
+%    if pol_X ~= pi
+%        pol_X = mod(pol_X,pi) ;
+%    end
+%    pol_Y = pol_Y + spinpol ;
+%    if pol_Y ~= pi
+%        pol_Y = mod(pol_Y,pi) ;
+%    end
+%    pol_Z = pol_Z + spinpol ;
+%    if pol_Z ~= pi
+%        pol_Z = mod(pol_Z,pi) ;
+%    end
+%    pol_Xm = pol_Xm + spinpol ;
+%    if pol_Xm ~= pi
+%        pol_Xm = mod(pol_Xm,pi) ;
+%    end
+%    pol_Ym = pol_Ym + spinpol ;
+%    if pol_Ym ~= pi
+%        pol_Ym = mod(pol_Ym,pi) ;
+%    end
+%    pol_Zm = pol_Zm + spinpol ;
+%    if pol_Zm ~= pi
+%        pol_Zm = mod(pol_Zm,pi) ;
+%    end   
+   [pol_X,azi_X] = Rotation(pol_X,azi_X,spinX,spinY,spinZ) ;
+   [pol_Y,azi_Y] = Rotation(pol_Y,azi_Y,spinX,spinY,spinZ) ;
+   [pol_Z,azi_Z] = Rotation(pol_Z,azi_Z,spinX,spinY,spinZ) ;
+   [pol_Xm,azi_Xm] = Rotation(pol_Xm,azi_Xm,spinX,spinY,spinZ) ;
+   [pol_Ym,azi_Ym] = Rotation(pol_Ym,azi_Ym,spinX,spinY,spinZ) ;
+   [pol_Zm,azi_Zm] = Rotation(pol_Zm,azi_Zm,spinX,spinY,spinZ) ;
 end
 
 % Same matrices as in Stefano code (for SPENVIS input)
@@ -59,4 +97,3 @@ inputE = [ x(:,1)' + x(:,3)'; xm(:,1)' + xm(:,3)';
 inputT = [ x(:,4)'; xm(:,4)'; 
             y(:,4)'; ym(:,4)'; 
             z(:,4)'; zm(:,4)'  ];
-

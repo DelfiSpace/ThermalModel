@@ -22,14 +22,6 @@ pocketqube3U;
 
 points = size(inputE, 2);
 
-spinX = 0; % degrees/second
-spinY = 0; % degrees/second
-spinZ = 0; % degrees/second
-
-% spinX = 15; % degrees/second
-% spinY = 12; % degrees/second
-% spinZ = 22; % degrees/second
-
 t0 = 4.2 - T0;
 
 b = zeros(size(SolverMatrix, 2), points);
@@ -45,9 +37,9 @@ zAngle = 0;
 
 % heat per simulation node
 heat = zeros(length(hc), points);
-heat(1:6, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
-                - rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle) .* sa * efficiency ...
-                + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* panelarea;
+heat(1:6,1) = alphaSolarCells * inputT(:,1) .* sa' ...
+                - inputE(:,1) .* sa' * efficiency ...
+                + alphaPanels * inputT(:,1) .* panelarea' ;
 heat(7,:) = constantHeat;
 
 % create the arrays used to store the average surfaces
@@ -61,22 +53,22 @@ avgHpower = sum(heat(1:6, 1));
 %% Temperature Computation 
 for h = 2 : points
     % calculate the incoming heat power
-    heat(1:6, h) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .*  sa ...
-                    - rotateZ(rotateY(rotateX(inputE(:, h)', xAngle), yAngle), zAngle) .* sa * efficiency ...
-                    + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .* panelarea;
+    heat(1:6,h) = alphaSolarCells * inputT(:,h) .* sa' ...
+                - inputE(:,h) .* sa' * efficiency ...
+                + alphaPanels * inputT(:,h) .* panelarea' ;
     
     % keep track of the current position 
-    xAngle = xAngle + spinX;
-    yAngle = yAngle + spinY;
-    zAngle = zAngle + spinZ;
+    xAngle = xAngle + spinX; %in rad
+    yAngle = yAngle + spinY; %in rad
+    zAngle = zAngle + spinZ; %in rad
     
     % calculate the total heat and normalize to account for 50%
     % illumination over the orbit
     %heat(1:6,h) = (output(:, h)) / mean(x(:,1)) * 0.5;
     avgHpower = avgHpower + sum(heat(1:6, h));
     
-    surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle), yAngle), zAngle)';
-    surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
+    surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle*180/pi), yAngle*180/pi), zAngle*180/pi)';
+    surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle*180/pi), yAngle*180/pi), zAngle*180/pi)';
     
     % subtract the heat radiated (Stefan Boltzman law) by the solar cells
     heat(1:6,h) = heat(1:6,h) - sa' * sigma * epsilonSolarCells .* t(1:6, h - 1).^4;
@@ -149,5 +141,3 @@ title('Thermal Simulation')
 xlabel('Time - s')
 ylabel('Temperature - degC')
 axis tight
-
-
