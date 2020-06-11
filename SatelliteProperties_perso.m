@@ -35,6 +35,10 @@ else
     azi_Zm = mod(azi_Z+pi,2*pi) ;
 end
 
+%% Satellite spin rates 
+spinX = 0; % rad/second
+spinY = 0; % rad/second
+spinZ = 0; % rad/second
 
 
 
