@@ -29,7 +29,7 @@ else
     elseif c>pi/2 && c<=pi && s>=0 && s<=pi/2
         New_azi = c ;
     elseif c>=0 && c<=pi/2 && s>=-pi/2 && s<0
-        New_azi = s ;
+        New_azi = s+2*pi ;
     elseif c>pi/2 && c<=pi && s>=-pi/2 && s<0
         New_azi = -c+2*pi ;
     end
