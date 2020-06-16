@@ -31,9 +31,9 @@ function test_HeatReceived_nadir
 %         [0 0 0 0 100 220 460 0 460 220 100 0 0 0 0]]); 
     
     if Fpla <= (210+210*0.1)*ones(1,length(teta)) & Fpla >= (210-210*0.1)*ones(1,length(teta))
-        a = 1 ;
+        a = true ;
     else
-        a = 0;
+        a = false;
     end
     asserTrue(a);
     
@@ -59,9 +59,9 @@ function test_HeatReceived_forward
 %         [110 100 50 0 0 0 50 100 110] ; [0 0 0 0 1295 1370 1190 680 0]]); 
     % assertEqual(round(Fpla), 70*ones(1,length(teta))) ;
     if Fpla <= (70+70*0.1)*ones(1,length(teta)) & Fpla >= (70-70*0.1)*ones(1,length(teta))
-        a = 1 ;
+        a = true ;
     else
-        a = 0 ;
+        a = false ;
     end
     assertTrue(a);
     
@@ -86,11 +86,10 @@ function test_HeatReceived_North
     
 %     assertEqual(round([Fpla ; Falb ; Fs]), [60*ones(1,length(teta)) ; [55 0 0 0 0 0 55] ; [1185 1185 1185 0 1185 1185 1185]])
     % assertEqual(round(Fpla), 60*ones(1,length(teta))) ;
-    assertTrue(Fpla <= (60+60*0.1)*ones(1,length(teta)) & Fpla >= (60-60*0.1)*ones(1,length(teta)) ) ;
     if Fpla <= (60+60*0.1)*ones(1,length(teta)) & Fpla >= (60-60*0.1)*ones(1,length(teta))
-        a = 1 ;
+        a = true ;
     else
-        a = 0 ;
+        a = false ;
     end
     assertTrue(a);
     
