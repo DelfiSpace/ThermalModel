@@ -35,7 +35,7 @@ function test_HeatReceived_nadir
     else
         a = false;
     end
-    asserTrue(a);
+    assertTrue(a);
     
 function test_HeatReceived_forward
     % For a forward facing plate, beta=0°
