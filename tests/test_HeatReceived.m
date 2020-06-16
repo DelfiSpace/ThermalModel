@@ -32,7 +32,7 @@ function test_HeatReceived_nadir
 %     assertEqual(round([Fpla ; Falb ; Fs]), [210*ones(1,length(teta)) ; ...
 %         [360 320 180 0 0 0 0 0 0 0 0 0 180 320 360] ; ...
 %         [0 0 0 0 100 220 460 0 460 220 100 0 0 0 0]]); 
-    asserEqual(round(Fpla), 210*ones(1,length(teta))) ;
+    assertEqual(round(Fpla), 210*ones(1,length(teta))) ;
     
 function test_HeatReceived_forward
     % For a forward facing plate, beta=0°
@@ -54,7 +54,7 @@ function test_HeatReceived_forward
     
 %     assertEqual(round([Fpla ; Falb ; Fs]), [70*ones(1,length(teta)) ; ...
 %         [110 100 50 0 0 0 50 100 110] ; [0 0 0 0 1295 1370 1190 680 0]]); 
-    asserEqual(round(Fpla), 70*ones(1,length(teta))) ;
+    assertEqual(round(Fpla), 70*ones(1,length(teta))) ;
     
 function test_HeatReceived_North
     % For a North facing plate, beta=-60°
@@ -75,7 +75,7 @@ function test_HeatReceived_North
     end
     
 %     assertEqual(round([Fpla ; Falb ; Fs]), [60*ones(1,length(teta)) ; [55 0 0 0 0 0 55] ; [1185 1185 1185 0 1185 1185 1185]])
-    asserEqual(round(Fpla), 60*ones(1,length(teta))) ;
+    assertEqual(round(Fpla), 60*ones(1,length(teta))) ;
     
     
     
