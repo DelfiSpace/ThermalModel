@@ -1,10 +1,6 @@
 
 % Computes the illumination data 
 
-% Day of the simulation
-% day = input('What is the day of the simulation? \n') ;
-day = 1 ;
-
 % Load the satellite orbital parameters
 SatelliteProperties_perso
 

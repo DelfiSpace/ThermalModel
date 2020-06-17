@@ -1,0 +1,48 @@
+
+MLTAN/RAAN relationship
+-----------------------
+
+please select the type of conversion
+
+ <1> MLTAN to RAAN
+
+ <2> RAAN to MLTAN
+
+selection (1 or 2)
+? 1
+
+
+ascending node UTC epoch
+
+please input the calendar date
+(1 <= month <= 12, 1 <= day <= 31, year = all digits!)
+? 6,20,2010
+
+please input the universal time
+(0 <= hours <= 24, 0 <= minutes <= 60, 0 <= seconds <= 60)
+? 15,30,45
+
+please input the mean local time of the ascending node crossing
+(0 <= hours <= 24, 0 <= minutes <= 60, 0 <= seconds <= 60)
+? 18,0,0
+
+
+MLTAN to RAAN conversion
+
+ascending node calendar date             20-Jun-2010
+
+ascending node universal time            15:30:45.000
+
+mean local time of the ascending node    18:00:00.000
+
+right ascension of the ascending node    178.739073 degrees
+
+east longitude of the ascending node      37.312595 degrees
+
+right ascension of the mean sun           88.739073 degrees
+
+Greenwich apparent sidereal time         141.426477 degrees
+
+equation of time                          -1.580413 minutes
+
+

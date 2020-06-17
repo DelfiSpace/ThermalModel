@@ -27,7 +27,7 @@ end
 % Solar radiation
 [umbra, r, teta_shadow] = EclipseTime_perso(beta,97.5,h) ;
 if (teta>=teta_shadow && teta<=2*pi-teta_shadow)
-    Fs = 0 ; % Staellite in shadow
+    Fs = 0 ; % Satellite in shadow
 else
     a = cos(beta)*cos(teta)*sin(pol)*cos(azi) + sin(beta)*sin(pol)*sin(azi) ...
         - cos(beta)*sin(teta)*cos(pol) ;
