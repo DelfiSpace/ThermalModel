@@ -21,7 +21,7 @@ function [dpsi, deps] = nod(jdate)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 global inutate xnod
-
+inutate = 1 ;
 if (inutate == 1)
    % read coefficient data file
    

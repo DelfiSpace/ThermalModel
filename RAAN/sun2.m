@@ -28,7 +28,7 @@ function [rasc, decl, rsun] = sun2 (jdate)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 global suncoef sdata rlsun
-
+suncoef = 1 ;
 if (suncoef == 1)
    
    sdata = [403406;      0; 4.721964;      1.621043;
