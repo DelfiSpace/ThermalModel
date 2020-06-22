@@ -11,20 +11,21 @@ clc
 
 %% Initialisation
 
-% load phisycal constants needed for simulation
-constants_perso
+% load physical constants needed for simulation
+constants_perso;
 
 % load illumination profile 
-LoadIllumination_perso
+LoadIllumination_perso;
 
 % load satellite configuration
-pocketqube3U;
+% pocketqube3U_perso;
+funcube;
 
 points = size(inputE, 2);
 
-spinX = spinX*180/pi; % degrees/second
-spinY = spinY*180/pi; % degrees/second
-spinZ = spinZ*180/pi; % degrees/second
+% spinX = spinX*180/pi; % degrees/second
+% spinY = spinY*180/pi; % degrees/second
+% spinZ = spinZ*180/pi; % degrees/second
 
 t0 = 4.2 - T0;
 
@@ -131,14 +132,14 @@ equilibriumT = ((avgHpower + constantHeat) / (epsilonSolarCells * avgSurfaceSA +
     epsilonPanels * avgSurfaceSP) / sigma)^(1/4) + T0
 
 figure
-plot(t(1,range)+T0-plotAverage+equilibriumT, 'LineWidth', 2)
+plot(t(1,range)+T0, 'LineWidth', 2)
 hold on
-plot(t(2,range)+T0-plotAverage+equilibriumT, 'r', 'LineWidth', 2)
-plot(t(3,range)+T0-plotAverage+equilibriumT, 'g', 'LineWidth', 2)
-plot(t(4,range)+T0-plotAverage+equilibriumT, 'k', 'LineWidth', 2)
-plot(t(5,range)+T0-plotAverage+equilibriumT, 'm', 'LineWidth', 2)
-plot(t(6,range)+T0-plotAverage+equilibriumT, 'c', 'LineWidth', 2)
-plot(t(7,range)+T0-plotAverage+equilibriumT, 'b--', 'LineWidth', 2)
+plot(t(2,range)+T0, 'r', 'LineWidth', 2)
+plot(t(3,range)+T0, 'g', 'LineWidth', 2)
+plot(t(4,range)+T0, 'k', 'LineWidth', 2)
+plot(t(5,range)+T0, 'm', 'LineWidth', 2)
+plot(t(6,range)+T0, 'c', 'LineWidth', 2)
+plot(t(7,range)+T0, 'b--', 'LineWidth', 2)
 grid on
 legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload');
 title('Thermal Simulation')

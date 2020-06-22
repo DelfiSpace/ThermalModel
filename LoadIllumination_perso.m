@@ -9,7 +9,9 @@ orbit = 14 ;
 
 % Evolution of the orbit angle (teta) during the orbits 
 T_orbit = floor(2*pi*sqrt((Re+h)^3/(G*Me))) ; %orbit period
-teta1 = 0:2*pi/(T_orbit):2*pi*orbit ;
+% Mean_anomaly = 262.694 *pi/180 ; %Mean anomaly of funcube at the begining 
+Mean_anomaly = 283.694 *pi/180 ; 
+teta1 = Mean_anomaly:2*pi/(T_orbit):2*pi*orbit+Mean_anomaly ;
 teta1 = mod(teta1,2*pi) ;
 
 % Time step in second

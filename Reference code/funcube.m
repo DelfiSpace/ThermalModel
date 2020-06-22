@@ -22,7 +22,9 @@ efficiency = 0.25;
 % 1U CubeSat
 sa = [2 2 2 2 2 2] * scarea;
 SolarArray = 0.106 * 0.106 * [1 1 1 1 1 1];
-thicknessSolarArray = 1e-3;
+% thicknessSolarArray = 1e-3;
+thicknessSolarArray = 3.5e-3;
+
 
 contactWidth = 1e-3;
 %tcLongSide  = thicknessSolarArray / (0.178 * contactWidth * thermCAl);
@@ -47,13 +49,17 @@ massSolarArray = volumeSolarArray * densityAl;
 hc = (heatCAl * massSolarArray)';
 
 % absorbptivity of the solar panel surface (anodized alluminum)
-alphaPanels = 0.5;
+% alphaPanels = 0.5;
+alphaPanels = 0.38;
 % emissivity of the solar panel surface (anodized alluminum)
-epsilonPanels = 0.8;
+% epsilonPanels = 0.8;
+epsilonPanels = 0.87;
 % absorbptivity of AzurSpace solar cells
-alphaSolarCells = 0.91;
+% alphaSolarCells = 0.91;
+alphaSolarCells = 0.86;
 % emissivity of solar cells (from Emcore / ClydeSpace datasheet)
-epsilonSolarCells = 0.85;
+% epsilonSolarCells = 0.85;
+epsilonSolarCells = 0.91;
 
 t0 = 238;
 

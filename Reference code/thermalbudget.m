@@ -22,9 +22,13 @@ pocketqube3U;
 
 points = size(inputE, 2);
 
-spinX = 15; % degrees/second
-spinY = 12; % degrees/second
-spinZ = 22; % degrees/second
+% spinX = 15; % degrees/second
+% spinY = 12; % degrees/second
+% spinZ = 22; % degrees/second
+
+spinX = 0; % degrees/second
+spinY = 0; % degrees/second
+spinZ = 0; % degrees/second
 
 t0 = 4.2 - T0;
 

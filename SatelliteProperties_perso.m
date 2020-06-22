@@ -2,16 +2,17 @@
 % Satellite orbital parameters
 
 % Day of the simulation
-day = 1 ;
-year = 2020 ;
-month = 1 ; 
-jdate = julian(month,day,year) ; %julian day
+day = 4 ;
+year = 2016 ;
+month = 2 ; 
+% jdate = julian(month,day,year) ; %julian day
 
 %% Orbital parameters
-h = 500E3 ; %altitude
+h = 630E3 ; %altitude
 LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
-RAAN = mltan2raan(jdate,LTAN) ; %Right ascension of the ascending node (in rad)
-i = 97 *pi/180 ; %inclination (in rad)
+%RAAN = mltan2raan(jdate,LTAN) ; %Right ascension of the ascending node (in rad)
+RAAN = 94.3150 *pi/180 ;
+i = 97.004 *pi/180 ; %inclination (in rad)
 beta = BetaAngle_perso(day,RAAN,i) ; %beta angle (in rad)
 
 %% Initial orientation of the satellite faces
@@ -35,7 +36,7 @@ end
 
 pol_Z = pi/2 ; %North facing plate
 azi_Z = 3*pi/2 ;
-pol_Zm = mod(pol_Z+pi,pi) ;
+pol_Zm = pi-pol_Z ;
 if azi_Z == 0
     azi_Zm = 0 ;
 else
@@ -43,9 +44,9 @@ else
 end
 
 %% Satellite spin rates 
-spinX = 0; % rad/second
-spinY = 0; % rad/second
-spinZ = 0; % rad/second
+% spinX = 0; % rad/second
+% spinY = 0; % rad/second
+% spinZ = 0; % rad/second
 
 
 
