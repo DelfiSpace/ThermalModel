@@ -17,18 +17,25 @@ time = 0:60:60*(length(X)-1) ; % One measure every minute
 
 graphsize = 1:500 ;
 
-plot(time(graphsize),BlackChassis(graphsize), 'LineWidth', 2)
+plot(time(graphsize),BlackChassis(graphsize),'y:', 'LineWidth', 2)
 hold on 
 % plot(time(graphsize),SilverChassis(graphsize),'r', 'LineWidth', 2)
-plot(time(graphsize),BlackPanel(graphsize), 'g', 'LineWidth', 2)
+plot(time(graphsize),BlackPanel(graphsize), 'g:', 'LineWidth', 2)
 % plot(time(graphsize),SilverPanel(graphsize), 'm', 'LineWidth', 2)
 plot(time(graphsize),Xm(graphsize), 'k:', 'LineWidth', 2)
 plot(time(graphsize),Y(graphsize), 'b:', 'LineWidth', 2)
 plot(time(graphsize),Ym(graphsize), 'r:', 'LineWidth', 2)
 plot(time(graphsize),X(graphsize), 'c:', 'LineWidth', 2)
 plot(t(1,1:30000)+T0, 'm', 'LineWidth', 2) % X simulation
+% plot(t(2,1:30000)+T0, 'LineWidth', 2)
+% plot(t(3,1:30000)+T0, 'LineWidth', 2)
+% plot(t(4,1:30000)+T0, 'LineWidth', 2)
+% plot(t(5,1:30000)+T0, 'LineWidth', 2)
+% plot(t(6,1:30000)+T0, 'LineWidth', 2)
+% plot(t(7,1:30000)+T0, 'LineWidth', 2)
 grid on
-legend('Black Chassis', 'Black Panel', 'X-', 'Y', 'Y-', 'X', 'X simulation') 
+legend('Black Chassis', 'Black Panel', 'X-', 'Y', 'Y-', 'X', 'X simulation', 'X- simulation', ...
+    'Y simulation', 'Y- simulation', 'Z simulation', 'Z- simulation','payload') 
 title('Temperature measurements for FUNcube (02/04/2016) VS Computed Temperature for X panel')
 xlabel('Time - s')
 ylabel('Temperature - degC')

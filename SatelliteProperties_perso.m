@@ -1,19 +1,37 @@
 
 % Satellite orbital parameters
 
-% Day of the simulation
-day = 4 ;
-year = 2016 ;
-month = 2 ; 
-% jdate = julian(month,day,year) ; %julian day
+%%Funcube
+% %Day of the simulation
+% day = 4 ;
+% year = 2016 ;
+% month = 2 ; 
+% % jdate = julian(month,day,year) ; %julian day
+% 
+% % Orbital parameters
+% % Mean_anomaly = 262.694 *pi/180 ; %Mean anomaly of funcube at the begining 
+% Mean_anomaly = 283.694 *pi/180 ; 
+% h = 630E3 ; %altitude
+% LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
+% %RAAN = mltan2raan(jdate,LTAN) ; %Right ascension of the ascending node (in rad)
+% RAAN = 94.3150 *pi/180 ;
+% i = 97.004 *pi/180 ; %inclination (in rad)
+% beta = BetaAngle_perso(day,RAAN,i) ; %beta angle (in rad)
 
-%% Orbital parameters
-h = 630E3 ; %altitude
-LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
-%RAAN = mltan2raan(jdate,LTAN) ; %Right ascension of the ascending node (in rad)
-RAAN = 94.3150 *pi/180 ;
-i = 97.004 *pi/180 ; %inclination (in rad)
+%% QB50 P1
+% Day of the simulation
+day = 6 ;
+year = 2015 ;
+month = 5 ; 
+
+% Orbital parameters
+h = 603E3 ; %altitude
+Mean_anomaly = 30.8695 *pi/180 ;
+LTAN = 6+0/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
+RAAN = 26.362 *pi/180 ;
+i = 97.96 *pi/180 ; %inclination (in rad)
 beta = BetaAngle_perso(day,RAAN,i) ; %beta angle (in rad)
+
 
 %% Initial orientation of the satellite faces
 pol_X = pi/2 ; %nadir facing plate
@@ -42,11 +60,6 @@ if azi_Z == 0
 else
     azi_Zm = mod(azi_Z+pi,2*pi) ;
 end
-
-%% Satellite spin rates 
-% spinX = 0; % rad/second
-% spinY = 0; % rad/second
-% spinZ = 0; % rad/second
 
 
 

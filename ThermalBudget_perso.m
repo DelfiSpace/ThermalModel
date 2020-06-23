@@ -19,7 +19,8 @@ LoadIllumination_perso;
 
 % load satellite configuration
 % pocketqube3U_perso;
-funcube;
+% funcube;
+QB50_P1;
 
 points = size(inputE, 2);
 
