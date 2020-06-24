@@ -23,15 +23,15 @@ efficiency = 0.25;
 sa = [4 4 4 2 0 0] * scarea;
 SolarArray = 0.1 * [0.228 0.228 0.228 0.228 0.1 0.1];
 % thicknessSolarArray = 1e-3;
-thicknessSolarArray = 3.5e-3;
+thicknessSolarArray = 2.9e-3;
 
 
 contactWidth = 1e-3;
 %tcLongSide  = thicknessSolarArray / (0.178 * contactWidth * thermCAl);
 %tcShortSide = thicknessSolarArray / (0.05  * contactWidth * thermCAl);
 
-tcLongSide  = 0.05  / (0.178 * thicknessSolarArray * thermCAl);
-tcShortSide  = (0.178/2 + 0.05/2)  / (0.05 * thicknessSolarArray * thermCAl);
+tcLongSide  = 0.1  / (0.228 * thicknessSolarArray * thermCAl);
+tcShortSide  = (0.228/2 + 0.1/2)  / (0.1 * thicknessSolarArray * thermCAl);
 
 volumeSolarArray = SolarArray * thicknessSolarArray;
 
@@ -53,13 +53,13 @@ hc = (heatCAl * massSolarArray)';
 alphaPanels = 0.38;
 % emissivity of the solar panel surface (anodized alluminum)
 % epsilonPanels = 0.8;
-epsilonPanels = 0.87;
+epsilonPanels = 0.89;
 % absorbptivity of AzurSpace solar cells
 % alphaSolarCells = 0.91;
-alphaSolarCells = 0.86;
+alphaSolarCells = 0.82;
 % emissivity of solar cells (from Emcore / ClydeSpace datasheet)
 % epsilonSolarCells = 0.85;
-epsilonSolarCells = 0.91;
+epsilonSolarCells = 0.92;
 
 t0 = 238;
 

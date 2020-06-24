@@ -1,9 +1,9 @@
 % Satellite description file for a 3U PocketQube
 
 % satellite spin rates per axis
-% spinX = 1.5438; % degrees/second
-% spinY = 1.2345; % degrees/second
-% spinZ = 2.2654; % degrees/second
+spinX = 1.5438; % degrees/second
+spinY = 1.2345; % degrees/second
+spinZ = 2.2654; % degrees/second
 
 % internal average power dissipation
 constantHeat = 1.0; % W

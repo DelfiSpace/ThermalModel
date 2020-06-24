@@ -28,14 +28,19 @@ end
 % Find the line numbers for the 6th of May 2015
 a = true ;
 k = 1 ;
+date_str = '2015-05-06' ;
 while a
-    if strcmp(date{k,1}{1}(1:10),'2015-05-06')
+    if k>length(date)
+        disp('No measurement on this day')
+        break
+    end
+    if strcmp(date{k,1}{1}(1:10),date_str)
         start_date = k ;
         while a
             k=k+1;
-            if not(strcmp(date{k,1}{1}(1:10),'2015-05-06'))
+            if not(strcmp(date{k,1}{1}(1:10),date_str)) || k>length(date)
                 end_date = k-1 ; 
-                a = false ;
+                a = false ; 
             end % if
         end %while
     end %if

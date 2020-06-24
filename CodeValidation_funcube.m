@@ -1,6 +1,6 @@
 
 % Validation of the Thermal Budget code 
-close all
+% close all
 % Loading data for funcube
 out=readTemperatureData('wod2016-02-10.csv');
 
@@ -17,6 +17,7 @@ time = 0:60:60*(length(X)-1) ; % One measure every minute
 
 graphsize = 1:500 ;
 
+figure
 plot(time(graphsize),BlackChassis(graphsize),'y:', 'LineWidth', 2)
 hold on 
 % plot(time(graphsize),SilverChassis(graphsize),'r', 'LineWidth', 2)
