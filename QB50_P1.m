@@ -1,12 +1,12 @@
 % Satellite description file for QB50 P1
 
 % satellite spin rates per axis
-spinX = 18.9; % degrees/second
-spinY = 1.2345; % degrees/second
-spinZ = 2.2654; % degrees/second
+spinX = 0.01; % degrees/second
+spinY = 7.8; % degrees/second
+spinZ = 7.8; % degrees/second
 
 % internal average power dissipation
-constantHeat = 2*1.3; % W
+constantHeat = 3*1.3; % W
 
 % active area of the solar panel in m^2
 % use 0.00318 for AzurSpace solar cells
@@ -23,7 +23,8 @@ efficiency = 0.25;
 sa = [4 4 4 2 0 0] * scarea;
 SolarArray = 0.1 * [0.228 0.228 0.228 0.228 0.1 0.1];
 % thicknessSolarArray = 1e-3;
-thicknessSolarArray = 2.9e-3;
+% thicknessSolarArray = 2.9e-3;
+thicknessSolarArray = 2e-3;
 
 
 contactWidth = 1e-3;
@@ -49,17 +50,17 @@ massSolarArray = volumeSolarArray * densityAl;
 hc = (heatCAl * massSolarArray)';
 
 % absorbptivity of the solar panel surface (anodized alluminum)
-% alphaPanels = 0.5;
-alphaPanels = 0.38;
+% alphaPanels = 0.38; % for funcube
+alphaPanels = 0.5;
 % emissivity of the solar panel surface (anodized alluminum)
-% epsilonPanels = 0.8;
-epsilonPanels = 0.89;
+% epsilonPanels = 0.89; % for funcube
+epsilonPanels = 0.8;
 % absorbptivity of AzurSpace solar cells
-% alphaSolarCells = 0.91;
-alphaSolarCells = 0.82;
+% alphaSolarCells = 0.82; % for funcube
+alphaSolarCells = 0.91;
 % emissivity of solar cells (from Emcore / ClydeSpace datasheet)
-% epsilonSolarCells = 0.85;
-epsilonSolarCells = 0.92;
+% epsilonSolarCells = 0.92; % for funcube
+epsilonSolarCells = 0.85;
 
 t0 = 238;
 

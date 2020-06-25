@@ -16,7 +16,8 @@ sigma = 5.670373e-8; % J m^-2 s^-1 K^-4
 % Material properties
 % Aluminum
 heatCAl = 910;          % J kg^-1 K^-1
-thermCAl = 180;         % W m^-1 K^-1
+% thermCAl = 180;         % W m^-1 K^-1
+thermCAl = 205;         % W m^-1 K^-1
 densityAl = 2700;       % kg m^-3
 
 % Steel

@@ -20,7 +20,7 @@
 
 %% QB50 P1
 % Day of the simulation
-day = 6 ;
+day = 7 ;
 year = 2015 ;
 month = 5 ; 
 
@@ -30,31 +30,41 @@ Mean_anomaly = 30.8695 *pi/180 ; %Mean anomaly (in rad)
 LTAN = 6+0/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
 RAAN = 25.42 *pi/180 ;
 i = 97.96 *pi/180 ; %inclination (in rad)
-beta = BetaAngle_perso(126,RAAN,i) ; %beta angle (in rad)
+beta = BetaAngle_perso(127,RAAN,i) ; %beta angle (in rad)
 
 %% Initial orientation of the satellite faces
 pol_X = pi/2 ; %nadir facing plate
 azi_X = pi ;
+% pol_X = pi/2 ; %zenith facing plate
+% azi_X = 0 ;
 pol_Xm = pi-pol_X ;
-if azi_X == 0
+if azi_X == 0 && pol_X == 0
     azi_Xm = 0;
+elseif azi_X == 0 && pol_X == pi
+    aziXm = 0;
 else
     azi_Xm = mod(azi_X+pi,2*pi) ;
 end
 
 pol_Y = 0 ; %forward facing plate
 azi_Y = 0 ;
+% pol_Y = pi ; %aft facing plate
+% azi_Y = 0 ;
 pol_Ym = pi-pol_Y ;
-if azi_Y == 0
+if azi_Y == 0 && pol_Y == 0
     azi_Ym=0 ;
+elseif azi_Y == 0 && pol_Y == pi
+    azi_Ym = 0;
 else
     azi_Ym = mod(azi_Y+pi,2*pi) ;    
 end
 
-pol_Z = pi/2 ; %North facing plate
-azi_Z = 3*pi/2 ;
+pol_Z = pi/2 ; %South facing plate
+azi_Z = pi/2 ;
 pol_Zm = pi-pol_Z ;
-if azi_Z == 0
+if azi_Z == 0 && pol_Z == 0
+    azi_Zm = 0 ;
+elseif azi_Z == 0 && pol_Z == pi
     azi_Zm = 0 ;
 else
     azi_Zm = mod(azi_Z+pi,2*pi) ;
