@@ -25,6 +25,11 @@ heatCsteel = 504;       % J kg^-1 K^-1
 thermCsteel = 16;       % W m^-1 K^-1
 densitysteel = 8000;    % kg m^-3
 
+% Brass
+heatCBrass = 380 ;      % J kg^-1 K^-1
+thermCBrass = 120 ;     % W m^-1 K^-1
+densityBrass = 8800 ;   % kg m^-3
+
 % FR4
 % heatCFR4 = 1800;        % J kg^-1 K^-1
 heatCFR4 = 1400;
