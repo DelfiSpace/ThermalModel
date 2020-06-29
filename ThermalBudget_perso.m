@@ -34,9 +34,10 @@ t0 = 4.2 - T0;
 b = zeros(size(SolverMatrix, 2), points);
 states = zeros(size(SolverMatrix, 1), points);
 
+Nface = size(SolarArray,1)*size(SolarArray,2) ; %number of nodes for the faces
 t = zeros(length(hc), points);
 t(:,1) = t0;
-t(7,1) = 17-T0;
+t(Nface+1,1) = 17-T0;
 % 3-axis rotation angles (all initialized to 0)
 xAngle = 0;
 yAngle = 0;
@@ -44,7 +45,7 @@ zAngle = 0;
 
 % heat per simulation node
 heat = zeros(length(hc), points);
-heat(1:6, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
+heat(1:Nface, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
                 - rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle) .* sa * efficiency ...
                 + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* panelarea;
 % heat(7,:) = constantHeat(1,1);
@@ -57,12 +58,12 @@ surfaceSA = zeros(size(inputE, 1), size(inputE, 2));
 % solar panel area not covered by solar cells
 surfaceSP = zeros(size(inputE, 1), size(inputE, 2));
 
-avgHpower = sum(heat(1:6, 1));
+avgHpower = sum(heat(1:Nface, 1));
 
 %% Temperature Computation 
 for h = 2 : points
     % calculate the incoming heat power
-    heat(1:6, h) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .*  sa ...
+    heat(1:Nface, h) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .*  sa ...
                     - rotateZ(rotateY(rotateX(inputE(:, h)', xAngle), yAngle), zAngle) .* sa * efficiency ...
                     + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .* panelarea;
     
@@ -80,11 +81,11 @@ for h = 2 : points
     surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
     
     % subtract the heat radiated (Stefan Boltzman law) by the solar cells
-    heat(1:6,h) = heat(1:6,h) - sa' * sigma * epsilonSolarCells .* t(1:6, h - 1).^4;
+    heat(1:Nface,h) = heat(1:6,h) - sa' * sigma * epsilonSolarCells .* t(1:6, h - 1).^4;
     
     % subtract the heat radiated (Stefan Boltzman law) by the rest of the
     % solar panel area
-    heat(1:6,h) = heat(1:6,h) - panelarea' * sigma * epsilonPanels .* t(1:6, h - 1).^4;
+    heat(1:Nface,h) = heat(1:6,h) - panelarea' * sigma * epsilonPanels .* t(1:6, h - 1).^4;
 
     % only take into account the lines that describe states (that also have
     % an incoming heat)
@@ -127,7 +128,7 @@ end
 range = 1:size(t, 2);
 %range = 1e4:1.3e4;
 
-plotAverage = mean(t(7,range))+T0
+plotAverage = mean(t(Nface+1,range))+T0
 
 avgHpower = avgHpower / points;
 avgSurfaceSA = mean(sum(surfaceSA, 1));
@@ -136,20 +137,25 @@ equilibriumT = ((avgHpower + sum(constantHeat)) / (epsilonSolarCells * avgSurfac
     epsilonPanels * avgSurfaceSP) / sigma).^(1/4) + T0
 
 figure
-plot(t(1,range)+T0, 'LineWidth', 2)
+plot(t(Nface/6,range)+T0, 'LineWidth', 2)
 hold on
-plot(t(2,range)+T0, 'r', 'LineWidth', 2)
-plot(t(3,range)+T0, 'g', 'LineWidth', 2)
-plot(t(4,range)+T0, 'k', 'LineWidth', 2)
-plot(t(5,range)+T0, 'm', 'LineWidth', 2)
-plot(t(6,range)+T0, 'c', 'LineWidth', 2)
-plot(t(7,range)+T0, 'b--', 'LineWidth', 2)
-plot(t(8,range)+T0, 'r--', 'LineWidth', 2)
-%plot(t(8,range)+T0, '.', 'LineWidth', 2)
-%plot(t(9,range)+T0, 'o', 'LineWidth', 2)
-%plot(t(10,range)+T0, '*', 'LineWidth', 2)
+plot(t(2*Nface/6,range)+T0, 'r', 'LineWidth', 2)
+plot(t(3*Nface/6,range)+T0, 'g', 'LineWidth', 2)
+plot(t(4*Nface/6,range)+T0, 'k', 'LineWidth', 2)
+plot(t(5*Nface/6,range)+T0, 'm', 'LineWidth', 2)
+plot(t(6*Nface/6,range)+T0, 'c', 'LineWidth', 2)
+leg = {'X+'; 'X-'; 'Y+'; 'Y-'; 'Z+'; 'Z-'} ;
+legPayload = [] ;
+for i=1:length(constantHeat)
+    plot(t(Nface+i,range)+T0, '--', 'LineWidth', 2) %plot the payloads temperature
+    legPayload = [legPayload ; {['Payload',num2str(i)]}] ;
+end
+%plot(t(9,range)+T0, '.', 'LineWidth', 2)
+%plot(t(10,range)+T0, 'o', 'LineWidth', 2)
+%plot(t(11,range)+T0, '*', 'LineWidth', 2)
 grid on
-legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload 1', 'Payload2', 'Top', 'Middle', 'Bottom');
+legend([leg; legPayload])
+%legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload 1', 'Payload2', 'Top', 'Middle', 'Bottom');
 title('Thermal Simulation')
 xlabel('Time - s')
 ylabel('Temperature - degC')

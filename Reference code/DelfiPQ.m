@@ -8,7 +8,7 @@ spinX = 18.9; % degrees/second
 spinY = 1.2345; % degrees/second
 spinZ = 2.2654; % degrees/second
 
-% internal average power dissipation
+% internal average power dissipation (per payload node)
 constantHeat = [0.7/3 ; 0.7*2/3]; % W
 
 % active area of the solar panel in m^2
@@ -19,12 +19,20 @@ scarea = 0.00318; % m^2
 efficiency = 0.298;
 
 % axis definition: X+ X- Y+ Y- Z+ Z-
-% [1 1 1 1 0 0] means that the satellite has 1 solar cell on the
+% sa=[1 1 1 1 0 0] means that the satellite has 1 solar cell on the
 % X+, X-, Y+ and Y- directions
 
-% 1U CubeSat
-sa = [2 2 2 2 0 0] * scarea;
+% 2U PocketQube
+% Solar array: area of each node
+% Column 1 -> X+
+% Column 2 -> X-
+% Column 3 -> Y+
+% Column 4 -> Y-
+% Column 5 -> Z+
+% Column 6 -> Z-
 SolarArray = [0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025];
+% area of Solar cells per node 
+sa = [2 2 2 2 0 0] * scarea;
 % thicknessSolarArray = 1e-3;
 thicknessSolarArray = 1.6e-3;
 
@@ -52,7 +60,9 @@ end
 massSolarArray = volumeSolarArray * densityFR4; 
 
 % calculate the heat capacitance
-hc = (heatCFR4 * massSolarArray)';
+hc = (heatCFR4 * massSolarArray);
+% reshape hc to have an array: number of lines = number of nodes
+hc = reshape(hc,size(hc,1)*size(hc,2),1) ;
 
 % absorbptivity of the solar panel surface (anodized alluminum)
 % alphaPanels = 0.5;
@@ -69,52 +79,54 @@ alphaSolarCells = 0.91;
 
 t0 = 238;
 
+% heat capacitance of the payloads and the other parts in the model
 hcFR4 = heatCFR4 * 0.042 * 0.042 * 0.0016 * 2.5 * 8 * densityFR4;
-hc = [hc; hcFR4; hcFR4; thermCAl*0.0103; thermCAl*0.034; thermCAl*0.006 ]; % why not heatCAl?
+hc = [hc; hcFR4; hcFR4; heatCAl*0.0103; heatCAl*0.034; heatCAl*0.006]; 
 
 %payload conductance matrix
-payloadR  = 0.007 / (4 * 1e-3 *  1e-3 * pi * thermCsteel);
-payloadRB  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl);
-payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK);
+payloadR  = 0.007 / (4 * 1e-3 *  1e-3 * pi * thermCsteel); 
+payloadRB  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl); %tube
+payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK); %tube
 
 SolverMatrix = diag(hc) / dt;
 
 % thermal conductance between X+ and the metal structs
-% axis definition: X+ X- Y+ Y- Z+ Z-
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 0 0 0 0 0 0 -1 0 0], ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 0 0 0 0 0 0 0 -1 0], ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 0 0 0 0 0 0 0 0 -1], ThermalResistanceTopPlate);
+% Node definition: X+=1 X-=2 Y+=3 Y-=4 Z+=5 Z-=6 Payload1=7 Payload2=8
+% TopRing=9 MiddleRing=10 BottomRing=11
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 9, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 10, ThermalResistanceMiddlePlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 11, ThermalResistanceTopPlate);
 
 % thermal conductance between X- and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 0 0 0 0 0 0 -1 0 0], ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 0 0 0 0 0 0 0 -1 0], ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 0 0 0 0 0 0 0 0 -1], ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 9, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 10, ThermalResistanceMiddlePlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 11, ThermalResistanceTopPlate);
 
 % thermal conductance between Y+ and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 1 0 0 0 0 0 -1 0 0], ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 1 0 0 0 0 0 0 -1 0], ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 1 0 0 0 0 0 0 0 -1], ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 9, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 10, ThermalResistanceMiddlePlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 11, ThermalResistanceTopPlate);
 
 % thermal conductance between Y- and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 1 0 0 0 0 -1 0 0], ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 1 0 0 0 0 0 -1 0], ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 1 0 0 0 0 0 0 -1], ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 9, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 10, ThermalResistanceMiddlePlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 11, ThermalResistanceTopPlate);
 
 % thermal conductance between Z+ and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 1 0 0 0 -1 0 0], ThermalResistanceTop);
+SolverMatrix = addThermalConnection(SolverMatrix, 5, 9, ThermalResistanceTop);
 
 % thermal conductance between Z- and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 1 0 0 0 0 -1], ThermalResistanceTop);
+SolverMatrix = addThermalConnection(SolverMatrix, 6, 11, ThermalResistanceTop);
 
 % thermal conductance between the payload and the metal struts
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 0 1 0 -1 0 0], payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 0 1 0 0 -1 0], payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 0 1 0 0 0 -1], payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
+SolverMatrix = addThermalConnection(SolverMatrix, 7, 9, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
+SolverMatrix = addThermalConnection(SolverMatrix, 7, 10, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
+SolverMatrix = addThermalConnection(SolverMatrix, 7, 11, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 
 % thermal conductance between the payload and the metal struts
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 0 0 1 -1 0 0], payloadR*payloadRB/(payloadR + payloadRB));
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 0 0 1 0 -1 0], payloadR*payloadRB/(payloadR + payloadRB));
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 0 0 1 0 0 -1], payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 8, 9, payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 8, 10, payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 8, 11, payloadR*payloadRB/(payloadR + payloadRB));
 
 % calculate the effective absorbing and emitting area (weighted by the
 % absorption and emission coefficients)
