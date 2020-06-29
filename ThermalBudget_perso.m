@@ -10,18 +10,20 @@ clearvars
 clc
 
 %% Initialisation
+dt=1;
 
 % load physical constants needed for simulation
 constants_perso;
-
-% load illumination profile 
-LoadIllumination_perso;
 
 % load satellite configuration
 % pocketqube3U_perso;
 % funcube;
 DelfiPQ;
 % QB50_P1;
+
+% load illumination profile 
+LoadIllumination_perso;
+
 
 points = size(inputE, 2);
 
@@ -34,7 +36,6 @@ t0 = 4.2 - T0;
 b = zeros(size(SolverMatrix, 2), points);
 states = zeros(size(SolverMatrix, 1), points);
 
-Nface = size(SolarArray,1)*size(SolarArray,2) ; %number of nodes for the faces
 t = zeros(length(hc), points);
 t(:,1) = t0;
 t(Nface+1,1) = 17-T0;
@@ -74,18 +75,17 @@ for h = 2 : points
     
     % calculate the total heat and normalize to account for 50%
     % illumination over the orbit
-    %heat(1:6,h) = (output(:, h)) / mean(x(:,1)) * 0.5;
     %avgHpower = avgHpower + sum(heat(1:6, h));
     
     surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle), yAngle), zAngle)';
     surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
     
     % subtract the heat radiated (Stefan Boltzman law) by the solar cells
-    heat(1:Nface,h) = heat(1:6,h) - sa' * sigma * epsilonSolarCells .* t(1:6, h - 1).^4;
+    heat(1:Nface,h) = heat(1:Nface,h) - sa' * sigma * epsilonSolarCells .* t(1:Nface, h - 1).^4;
     
     % subtract the heat radiated (Stefan Boltzman law) by the rest of the
     % solar panel area
-    heat(1:Nface,h) = heat(1:6,h) - panelarea' * sigma * epsilonPanels .* t(1:6, h - 1).^4;
+    heat(1:Nface,h) = heat(1:Nface,h) - panelarea' * sigma * epsilonPanels .* t(1:Nface, h - 1).^4;
 
     % only take into account the lines that describe states (that also have
     % an incoming heat)
@@ -137,13 +137,13 @@ equilibriumT = ((avgHpower + sum(constantHeat)) / (epsilonSolarCells * avgSurfac
     epsilonPanels * avgSurfaceSP) / sigma).^(1/4) + T0
 
 figure
-plot(t(Nface/6,range)+T0, 'LineWidth', 2)
+plot(t(1,range)+T0, 'LineWidth', 2)
 hold on
-plot(t(2*Nface/6,range)+T0, 'r', 'LineWidth', 2)
-plot(t(3*Nface/6,range)+T0, 'g', 'LineWidth', 2)
-plot(t(4*Nface/6,range)+T0, 'k', 'LineWidth', 2)
-plot(t(5*Nface/6,range)+T0, 'm', 'LineWidth', 2)
-plot(t(6*Nface/6,range)+T0, 'c', 'LineWidth', 2)
+plot(t(1*Nface/6+1,range)+T0, 'r', 'LineWidth', 2)
+plot(t(2*Nface/6+1,range)+T0, 'g', 'LineWidth', 2)
+plot(t(3*Nface/6+1,range)+T0, 'k', 'LineWidth', 2)
+plot(t(4*Nface/6+1,range)+T0, 'm', 'LineWidth', 2)
+plot(t(5*Nface/6+1,range)+T0, 'c', 'LineWidth', 2)
 leg = {'X+'; 'X-'; 'Y+'; 'Y-'; 'Z+'; 'Z-'} ;
 legPayload = [] ;
 for i=1:length(constantHeat)

@@ -31,9 +31,11 @@ efficiency = 0.298;
 % Column 5 -> Z+
 % Column 6 -> Z-
 SolarArray = [0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025];
+%SolarArray = 0.5*[0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025;0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025 ];
+Nface = size(SolarArray,1)*size(SolarArray,2) ; %number of nodes for the faces
 % area of Solar cells per node 
 sa = [2 2 2 2 0 0] * scarea;
-% thicknessSolarArray = 1e-3;
+%sa = [1 1 1 1 0 0;1 1 1 1 0 0] * scarea;
 thicknessSolarArray = 1.6e-3;
 
 
@@ -51,6 +53,9 @@ volumeSolarArray = SolarArray * thicknessSolarArray;
 
 % area not covered by solar cells
 panelarea = SolarArray - sa;
+% reshape the area matrces to have arrays that suited to ThermalBudget
+sa = reshape(sa, 1, size(sa,1)*size(sa,2));
+panelarea = reshape(panelarea, 1, size(panelarea,1)*size(panelarea,2));
 % make sure the panel area cannot be negative
 if any(sum(panelarea < 0) ~= 0)
     error('One element of panel area is negative')
@@ -91,8 +96,8 @@ payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * th
 SolverMatrix = diag(hc) / dt;
 
 % thermal conductance between X+ and the metal structs
-% Node definition: X+=1 X-=2 Y+=3 Y-=4 Z+=5 Z-=6 Payload1=7 Payload2=8
-% TopRing=9 MiddleRing=10 BottomRing=11
+% Node definition for the model with 1 node per face: 
+% X+=1 X-=2 Y+=3 Y-=4 Z+=5 Z-=6 Payload1=7 Payload2=8 TopRing=9 MiddleRing=10 BottomRing=11
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 9, ThermalResistanceTopPlate);
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 10, ThermalResistanceMiddlePlate);
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 11, ThermalResistanceTopPlate);
