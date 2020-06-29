@@ -9,7 +9,7 @@ spinY = 1.2345; % degrees/second
 spinZ = 2.2654; % degrees/second
 
 % internal average power dissipation
-constantHeat = 0.7; % W
+constantHeat = [0.7/3 ; 0.7*2/3]; % W
 
 % active area of the solar panel in m^2
 % use 0.00318 for AzurSpace solar cells
@@ -24,7 +24,7 @@ efficiency = 0.298;
 
 % 1U CubeSat
 sa = [2 2 2 2 0 0] * scarea;
-SolarArray = [0.178 * 0.05 0.178 * 0.05 0.178 * 0.05 0.178 * 0.05 0.0025 0.0025];
+SolarArray = [0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025];
 % thicknessSolarArray = 1e-3;
 thicknessSolarArray = 1.6e-3;
 
@@ -49,7 +49,7 @@ if any(sum(panelarea < 0) ~= 0)
 end
 
 % solar panels mass
-massSolarArray = volumeSolarArray * densityFR4;
+massSolarArray = volumeSolarArray * densityFR4; 
 
 % calculate the heat capacitance
 hc = (heatCFR4 * massSolarArray)';
@@ -70,7 +70,7 @@ alphaSolarCells = 0.91;
 t0 = 238;
 
 hcFR4 = heatCFR4 * 0.042 * 0.042 * 0.0016 * 2.5 * 8 * densityFR4;
-hc = [hc; hcFR4; hcFR4; thermCAl*0.0103; thermCAl*0.034; thermCAl*0.006 ];
+hc = [hc; hcFR4; hcFR4; thermCAl*0.0103; thermCAl*0.034; thermCAl*0.006 ]; % why not heatCAl?
 
 %payload conductance matrix
 payloadR  = 0.007 / (4 * 1e-3 *  1e-3 * pi * thermCsteel);

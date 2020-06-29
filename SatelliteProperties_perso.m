@@ -70,6 +70,9 @@ else
     azi_Zm = mod(azi_Z+pi,2*pi) ;
 end
 
+% Orientation array for the faces
+orientation = [pol_X azi_X ; pol_Xm azi_Xm ; pol_Y azi_Y ; pol_Ym azi_Ym ; pol_Z azi_Z ; pol_Zm azi_Zm] ;
+
 
 
 

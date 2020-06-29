@@ -47,8 +47,9 @@ heat = zeros(length(hc), points);
 heat(1:6, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
                 - rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle) .* sa * efficiency ...
                 + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* panelarea;
-heat(7,:) = constantHeat/3;
-heat(8,:) = constantHeat/3*2;
+% heat(7,:) = constantHeat(1,1);
+% heat(8,:) = constantHeat(2,1);
+heat(7:7+length(constantHeat)-1,:) = constantHeat(:,1).* ones(length(constantHeat),size(heat,2)) ;
 
 % create the arrays used to store the average surfaces
 % area covered by silar cells
@@ -131,8 +132,8 @@ plotAverage = mean(t(7,range))+T0
 avgHpower = avgHpower / points;
 avgSurfaceSA = mean(sum(surfaceSA, 1));
 avgSurfaceSP = mean(sum(surfaceSP, 1));
-equilibriumT = ((avgHpower + constantHeat) / (epsilonSolarCells * avgSurfaceSA + ...
-    epsilonPanels * avgSurfaceSP) / sigma)^(1/4) + T0
+equilibriumT = ((avgHpower + sum(constantHeat)) / (epsilonSolarCells * avgSurfaceSA + ...
+    epsilonPanels * avgSurfaceSP) / sigma).^(1/4) + T0
 
 figure
 plot(t(1,range)+T0, 'LineWidth', 2)
