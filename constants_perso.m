@@ -31,3 +31,9 @@ heatCFR4 = 1400;
 % thermCFR4 = 0.25;       % W m^-1 K^-1
 thermCFR4 = 0.3;
 densityFR4 = 1850;      % kg m^-3
+
+% Brass
+thermCBrass = 110;       % W m^-1 K^-1
+
+% PEEK
+thermCPEEK = 0.25;       % W m^-1 K^-1

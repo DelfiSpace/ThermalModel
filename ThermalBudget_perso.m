@@ -20,7 +20,8 @@ LoadIllumination_perso;
 % load satellite configuration
 % pocketqube3U_perso;
 % funcube;
-QB50_P1;
+DelfiPQ;
+% QB50_P1;
 
 points = size(inputE, 2);
 
@@ -46,7 +47,8 @@ heat = zeros(length(hc), points);
 heat(1:6, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
                 - rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle) .* sa * efficiency ...
                 + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* panelarea;
-heat(7,:) = constantHeat;
+heat(7,:) = constantHeat/3;
+heat(8,:) = constantHeat/3*2;
 
 % create the arrays used to store the average surfaces
 % area covered by silar cells
@@ -71,7 +73,7 @@ for h = 2 : points
     % calculate the total heat and normalize to account for 50%
     % illumination over the orbit
     %heat(1:6,h) = (output(:, h)) / mean(x(:,1)) * 0.5;
-    avgHpower = avgHpower + sum(heat(1:6, h));
+    %avgHpower = avgHpower + sum(heat(1:6, h));
     
     surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle), yAngle), zAngle)';
     surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
@@ -141,11 +143,15 @@ plot(t(4,range)+T0, 'k', 'LineWidth', 2)
 plot(t(5,range)+T0, 'm', 'LineWidth', 2)
 plot(t(6,range)+T0, 'c', 'LineWidth', 2)
 plot(t(7,range)+T0, 'b--', 'LineWidth', 2)
+plot(t(8,range)+T0, 'r--', 'LineWidth', 2)
+%plot(t(8,range)+T0, '.', 'LineWidth', 2)
+%plot(t(9,range)+T0, 'o', 'LineWidth', 2)
+%plot(t(10,range)+T0, '*', 'LineWidth', 2)
 grid on
-legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload');
+legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload 1', 'Payload2', 'Top', 'Middle', 'Bottom');
 title('Thermal Simulation')
 xlabel('Time - s')
 ylabel('Temperature - degC')
-axis tight
+%axis tight
 
 
