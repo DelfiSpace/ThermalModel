@@ -27,10 +27,6 @@ LoadIllumination_perso;
 
 points = size(inputE, 2);
 
-% spinX = spinX*180/pi; % degrees/second
-% spinY = spinY*180/pi; % degrees/second
-% spinZ = spinZ*180/pi; % degrees/second
-
 t0 = 4.2 - T0;
 
 b = zeros(size(SolverMatrix, 2), points);
@@ -46,11 +42,15 @@ zAngle = 0;
 
 % heat per simulation node
 heat = zeros(length(hc), points);
-heat(1:Nface, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
-                - rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle) .* sa * efficiency ...
-                + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* panelarea;
+% heat(1:Nface, 1) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* sa ...
+%                 - rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle) .* sa * efficiency ...
+%                 + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle) .* panelarea;
 % heat(7,:) = constantHeat(1,1);
 % heat(8,:) = constantHeat(2,1);
+heat(1:Nface, 1) =    alphaSolarCells * FitNumberNode(rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle)',Nface)' .* sa ...
+                - FitNumberNode(rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle)',Nface)' .* sa * efficiency ...
+                + alphaPanels * FitNumberNode(rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle)',Nface)' .* panelarea;
+
 heat(7:7+length(constantHeat)-1,:) = constantHeat(:,1).* ones(length(constantHeat),size(heat,2)) ;
 
 % create the arrays used to store the average surfaces
@@ -64,9 +64,12 @@ avgHpower = sum(heat(1:Nface, 1));
 %% Temperature Computation 
 for h = 2 : points
     % calculate the incoming heat power
-    heat(1:Nface, h) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .*  sa ...
-                    - rotateZ(rotateY(rotateX(inputE(:, h)', xAngle), yAngle), zAngle) .* sa * efficiency ...
-                    + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .* panelarea;
+    %heat(1:Nface, h) =    alphaSolarCells * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .*  sa ...
+    %                - rotateZ(rotateY(rotateX(inputE(:, h)', xAngle), yAngle), zAngle) .* sa * efficiency ...
+    %                + alphaPanels * rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle) .* panelarea;
+    heat(1:Nface, h) =    alphaSolarCells * FitNumberNode(rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle)',Nface)' .*  sa ...
+                    - FitNumberNode(rotateZ(rotateY(rotateX(inputE(:, h)', xAngle), yAngle), zAngle)',Nface)' .* sa * efficiency ...
+                    + alphaPanels * FitNumberNode(rotateZ(rotateY(rotateX(inputT(:, h)', xAngle), yAngle), zAngle)',Nface)' .* panelarea;
     
     % keep track of the current position 
     xAngle = xAngle + spinX;
@@ -75,10 +78,11 @@ for h = 2 : points
     
     % calculate the total heat and normalize to account for 50%
     % illumination over the orbit
-    %avgHpower = avgHpower + sum(heat(1:6, h));
+    avgHpower = avgHpower + sum(heat(1:Nface, h));
     
-    surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle), yAngle), zAngle)';
-    surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
+    %These lines still have to be fixed
+    %surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle), yAngle), zAngle)';
+    %surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
     
     % subtract the heat radiated (Stefan Boltzman law) by the solar cells
     heat(1:Nface,h) = heat(1:Nface,h) - sa' * sigma * epsilonSolarCells .* t(1:Nface, h - 1).^4;
@@ -126,7 +130,6 @@ title('Z')
 end
 
 range = 1:size(t, 2);
-%range = 1e4:1.3e4;
 
 plotAverage = mean(t(Nface+1,range))+T0
 

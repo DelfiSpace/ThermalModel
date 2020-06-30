@@ -1,5 +1,11 @@
 % Satellite description file for a 3U PocketQube
 
+% This file is the only file to modify to increase the number of nodes :
+% constantHeat, SolarArray, sa, ThermalResistances, modification of the
+% thermal connection (at the end of this file) + don't forget to adapt the
+% materials.
+% There must the same number of nodes per face (Nface is divisible by 6)
+
 % satellite spin rates per axis
 % spinX = 1.5438; % degrees/second
 % spinY = 1.2345; % degrees/second
@@ -53,7 +59,7 @@ volumeSolarArray = SolarArray * thicknessSolarArray;
 
 % area not covered by solar cells
 panelarea = SolarArray - sa;
-% reshape the area matrces to have arrays that suited to ThermalBudget
+% reshape the area matrices to have arrays that suited to ThermalBudget
 sa = reshape(sa, 1, size(sa,1)*size(sa,2));
 panelarea = reshape(panelarea, 1, size(panelarea,1)*size(panelarea,2));
 % make sure the panel area cannot be negative
