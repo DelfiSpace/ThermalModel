@@ -7,9 +7,6 @@
 % There must the same number of nodes per face (Nface is divisible by 6)
 
 % satellite spin rates per axis
-% spinX = 1.5438; % degrees/second
-% spinY = 1.2345; % degrees/second
-% spinZ = 2.2654; % degrees/second
 spinX = 18.9; % degrees/second
 spinY = 1.2345; % degrees/second
 spinZ = 2.2654; % degrees/second
@@ -25,8 +22,6 @@ scarea = 0.00318; % m^2
 efficiency = 0.298;
 
 % axis definition: X+ X- Y+ Y- Z+ Z-
-% sa=[1 1 1 1 0 0] means that the satellite has 1 solar cell on the
-% X+, X-, Y+ and Y- directions
 
 % 2U PocketQube
 % Solar array: area of each node
@@ -37,11 +32,14 @@ efficiency = 0.298;
 % Column 5 -> Z+
 % Column 6 -> Z-
 SolarArray = [0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025];
-%SolarArray = 0.5*[0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025;0.178*0.05 0.178*0.05 0.178*0.05 0.178*0.05 0.0025 0.0025 ];
 Nface = size(SolarArray,1)*size(SolarArray,2) ; %number of nodes for the faces
-% area of Solar cells per node 
+
+% Area of Solar cells per node 
+% sa=[1 1 1 1 0 0] means that the satellite has 1 solar cell on the
+% X+, X-, Y+ and Y- directions
 sa = [2 2 2 2 0 0] * scarea;
-%sa = [1 1 1 1 0 0;1 1 1 1 0 0] * scarea;
+sa_sum = sum([sa ; zeros(1,length(sa))]) ; %Used to compute surfaceSA
+
 thicknessSolarArray = 1.6e-3;
 
 
@@ -59,6 +57,7 @@ volumeSolarArray = SolarArray * thicknessSolarArray;
 
 % area not covered by solar cells
 panelarea = SolarArray - sa;
+panelarea_sum = sum([panelarea ; zeros(1,length(panelarea))]) ; %Used to compute surfaceSP
 % reshape the area matrices to have arrays that suited to ThermalBudget
 sa = reshape(sa, 1, size(sa,1)*size(sa,2));
 panelarea = reshape(panelarea, 1, size(panelarea,1)*size(panelarea,2));

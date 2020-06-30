@@ -10,19 +10,18 @@ clearvars
 clc
 
 %% Initialisation
-dt=1;
 
 % load physical constants needed for simulation
 constants_perso;
+
+% load illumination profile 
+LoadIllumination_perso;
 
 % load satellite configuration
 % pocketqube3U_perso;
 % funcube;
 DelfiPQ;
 % QB50_P1;
-
-% load illumination profile 
-LoadIllumination_perso;
 
 
 points = size(inputE, 2);
@@ -80,9 +79,8 @@ for h = 2 : points
     % illumination over the orbit
     avgHpower = avgHpower + sum(heat(1:Nface, h));
     
-    %These lines still have to be fixed
-    %surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa, xAngle), yAngle), zAngle)';
-    %surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea, xAngle), yAngle), zAngle)';
+    surfaceSA(:,h) = rotateZ(rotateY(rotateX(sa_sum, xAngle), yAngle), zAngle)';
+    surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea_sum, xAngle), yAngle), zAngle)';
     
     % subtract the heat radiated (Stefan Boltzman law) by the solar cells
     heat(1:Nface,h) = heat(1:Nface,h) - sa' * sigma * epsilonSolarCells .* t(1:Nface, h - 1).^4;
