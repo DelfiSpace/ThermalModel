@@ -1,10 +1,11 @@
 % Satellite description file for a 3U PocketQube
 
-% This file is the only file to modify to increase the number of nodes :
-% constantHeat, SolarArray, sa, ThermalResistances, modification of the
-% thermal connection (at the end of this file) + don't forget to adapt the
-% materials.
+% This file is the model for DelfiPQ, considering one node per face, 2
+% nodes for the payload and one node for each metal ring
+
 % There must the same number of nodes per face (Nface is divisible by 6)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % satellite spin rates per axis
 spinX = 18.9; % degrees/second

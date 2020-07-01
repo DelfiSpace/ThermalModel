@@ -20,7 +20,8 @@ LoadIllumination_perso;
 % load satellite configuration
 % pocketqube3U_perso;
 % funcube;
-DelfiPQ;
+% DelfiPQ_11nodes;
+DelfiPQ_35nodes;
 % QB50_P1;
 
 
