@@ -1,4 +1,4 @@
-% Satellite description file for a 3U PocketQube
+% Satellite description file for a 2U PocketQube
 
 % This file is the model for DelfiPQ, considering one node per face, 2
 % nodes for the payload and one node for each metal ring

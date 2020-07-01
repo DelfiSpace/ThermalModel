@@ -21,7 +21,8 @@ LoadIllumination_perso;
 % pocketqube3U_perso;
 % funcube;
 % DelfiPQ_11nodes;
-DelfiPQ_35nodes;
+% DelfiPQ_35nodes;
+DelfiPQ_44nodes;
 % QB50_P1;
 
 

@@ -1,4 +1,4 @@
-% Satellite description file for a 3U PocketQube
+% Satellite description file for a 2U PocketQube
 
 % This file is the model for DelfiPQ, considering 5 nodes per face, 2
 % nodes for the payload and one node for each metal ring
@@ -155,11 +155,11 @@ SolverMatrix = addThermalConnection(SolverMatrix, 24, 33, ThermalResistanceTop_e
 SolverMatrix = addThermalConnection(SolverMatrix, 25, 33, ThermalResistanceTop_edge);
 
 % thermal conductance between Z- and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, 26, 34, ThermalResistanceTop_edge);
-SolverMatrix = addThermalConnection(SolverMatrix, 27, 34, ThermalResistanceTop_edge);
-SolverMatrix = addThermalConnection(SolverMatrix, 28, 34, ThermalResistanceTop_center);
-SolverMatrix = addThermalConnection(SolverMatrix, 29, 34, ThermalResistanceTop_edge);
-SolverMatrix = addThermalConnection(SolverMatrix, 30, 34, ThermalResistanceTop_edge);
+SolverMatrix = addThermalConnection(SolverMatrix, 26, 35, ThermalResistanceTop_edge);
+SolverMatrix = addThermalConnection(SolverMatrix, 27, 35, ThermalResistanceTop_edge);
+SolverMatrix = addThermalConnection(SolverMatrix, 28, 35, ThermalResistanceTop_center);
+SolverMatrix = addThermalConnection(SolverMatrix, 29, 35, ThermalResistanceTop_edge);
+SolverMatrix = addThermalConnection(SolverMatrix, 30, 35, ThermalResistanceTop_edge);
 
 % thermal conductance between the payload and the metal struts
 SolverMatrix = addThermalConnection(SolverMatrix, 31, 33, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
