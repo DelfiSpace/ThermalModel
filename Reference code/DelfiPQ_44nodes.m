@@ -63,6 +63,12 @@ ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.05 * 0.01 * thermCAl);
 ThermalResistanceTop_edge =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); 
 ThermalResistanceTop_center =     (0.05/sqrt(2)) / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl);
 
+ThermalResistanceInside_long = (0.178/2) / (0.05 * thicknessSolarArray * thermCAl) ;
+ThermalResistanceInside_short = (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ;
+
+ThermalResistanceInsideTOP_long = 0.05 / (0.05*0.5 * thicknessSolarArray * thermCAl) ;
+ThermalResistanceInsideTOP_short = (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) ;
+
 % tcLongSide  = 0.05  / (0.178 * thicknessSolarArray * thermCAl);
 % tcShortSide  = (0.178/2 + 0.05/2)  / (0.05 * thicknessSolarArray * thermCAl);
 %tcLongSide  = 0.106  / (0.106 * thicknessSolarArray * thermCFR4);
@@ -211,6 +217,66 @@ SolverMatrix = addThermalConnection(SolverMatrix, 32, 41, payloadR*payloadRB/(pa
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 42, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 43, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 44, payloadR*payloadRB/(payloadR + payloadRB));
+
+% thermal conductance between the nodes of X+
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 2, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 3, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 4, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 5, 2, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 5, 3, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 5, 4, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 3, ThermalResistanceInside_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 3, ThermalResistanceInside_short);
+
+% thermal conductance between the nodes of X-
+SolverMatrix = addThermalConnection(SolverMatrix, 6, 7, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 6, 8, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 6, 9, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 10, 7, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 10, 8, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 10, 9, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 7, 8, ThermalResistanceInside_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 9, 8, ThermalResistanceInside_short);
+
+% thermal conductance between the nodes of Y+
+SolverMatrix = addThermalConnection(SolverMatrix, 11, 12, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 11, 13, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 11, 14, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 15, 12, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 15, 13, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 15, 14, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 12, 13, ThermalResistanceInside_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 14, 13, ThermalResistanceInside_short);
+
+% thermal conductance between the nodes of Y-
+SolverMatrix = addThermalConnection(SolverMatrix, 16, 17, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 16, 18, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 16, 19, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 20, 17, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 20, 18, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 20, 19, ThermalResistanceInside_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 17, 18, ThermalResistanceInside_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 19, 18, ThermalResistanceInside_short);
+
+% thermal conductance between the nodes of Z+
+SolverMatrix = addThermalConnection(SolverMatrix, 21, 22, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 21, 23, ThermalResistanceInsideTOP_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 21, 24, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 25, 22, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 25, 23, ThermalResistanceInsideTOP_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 25, 24, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 22, 23, ThermalResistanceInsideTOP_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 24, 23, ThermalResistanceInsideTOP_short);
+
+% thermal conductance between the nodes of Z-
+SolverMatrix = addThermalConnection(SolverMatrix, 26, 27, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 26, 28, ThermalResistanceInsideTOP_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 26, 29, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 30, 27, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 30, 28, ThermalResistanceInsideTOP_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 30, 29, ThermalResistanceInsideTOP_long);
+SolverMatrix = addThermalConnection(SolverMatrix, 27, 28, ThermalResistanceInsideTOP_short);
+SolverMatrix = addThermalConnection(SolverMatrix, 29, 28, ThermalResistanceInsideTOP_short);
 
 % calculate the effective absorbing and emitting area (weighted by the
 % absorption and emission coefficients)
