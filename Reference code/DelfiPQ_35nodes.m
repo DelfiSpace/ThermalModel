@@ -8,9 +8,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % satellite spin rates per axis
-spinX = 18.9; % degrees/second
-spinY = 1.2345; % degrees/second
-spinZ = 2.2654; % degrees/second
+spinX = 0; % degrees/second
+spinY = 0; % degrees/second
+spinZ = 0; % degrees/second
 
 % internal average power dissipation (per payload node)
 constantHeat = [0.7/3 ; 0.7*2/3]; % W
