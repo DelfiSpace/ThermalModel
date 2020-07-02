@@ -28,12 +28,12 @@ plot(time(graphsize),Y(graphsize), 'b:', 'LineWidth', 2)
 plot(time(graphsize),Ym(graphsize), 'r:', 'LineWidth', 2)
 plot(time(graphsize),X(graphsize), 'c:', 'LineWidth', 2)
 plot(t(1,1:30000)+T0, 'm', 'LineWidth', 2) % X simulation
-% plot(t(2,1:30000)+T0, 'LineWidth', 2)
-% plot(t(3,1:30000)+T0, 'LineWidth', 2)
-% plot(t(4,1:30000)+T0, 'LineWidth', 2)
-% plot(t(5,1:30000)+T0, 'LineWidth', 2)
-% plot(t(6,1:30000)+T0, 'LineWidth', 2)
-% plot(t(7,1:30000)+T0, 'LineWidth', 2)
+plot(t(2,1:30000)+T0, 'LineWidth', 2)
+plot(t(3,1:30000)+T0, 'LineWidth', 2)
+plot(t(4,1:30000)+T0, 'LineWidth', 2)
+plot(t(5,1:30000)+T0, 'LineWidth', 2)
+plot(t(6,1:30000)+T0, 'LineWidth', 2)
+plot(t(7,1:30000)+T0, 'LineWidth', 2)
 grid on
 legend('Black Chassis', 'Black Panel', 'X-', 'Y', 'Y-', 'X', 'X simulation', 'X- simulation', ...
     'Y simulation', 'Y- simulation', 'Z simulation', 'Z- simulation','payload') 
