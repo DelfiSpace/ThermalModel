@@ -208,18 +208,18 @@ SolverMatrix = addThermalConnection(SolverMatrix, 31, 40, payloadR*payloadRPEEK/
 % SolverMatrix = addThermalConnection(SolverMatrix, 31, 44, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 
 % thermal conductance between the payload and the metal struts
-SolverMatrix = addThermalConnection(SolverMatrix, 32, 33, payloadR*payloadRB/(payloadR + payloadRB));
-SolverMatrix = addThermalConnection(SolverMatrix, 32, 34, payloadR*payloadRB/(payloadR + payloadRB));
-SolverMatrix = addThermalConnection(SolverMatrix, 32, 35, payloadR*payloadRB/(payloadR + payloadRB));
-SolverMatrix = addThermalConnection(SolverMatrix, 32, 36, payloadR*payloadRB/(payloadR + payloadRB));
+% SolverMatrix = addThermalConnection(SolverMatrix, 32, 33, payloadR*payloadRB/(payloadR + payloadRB));
+% SolverMatrix = addThermalConnection(SolverMatrix, 32, 34, payloadR*payloadRB/(payloadR + payloadRB));
+% SolverMatrix = addThermalConnection(SolverMatrix, 32, 35, payloadR*payloadRB/(payloadR + payloadRB));
+% SolverMatrix = addThermalConnection(SolverMatrix, 32, 36, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 37, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 38, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 39, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 40, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 41, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 42, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 43, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 44, payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 32, 41, payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 32, 42, payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 32, 43, payloadR*payloadRB/(payloadR + payloadRB));
+SolverMatrix = addThermalConnection(SolverMatrix, 32, 44, payloadR*payloadRB/(payloadR + payloadRB));
 
 % thermal conductance between the nodes of the top ring
 
