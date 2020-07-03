@@ -4,6 +4,9 @@
 % spinX = 18.9; % degrees/second
 % spinY = 1.2345; % degrees/second
 % spinZ = 2.2654; % degrees/second
+spinX = 1.5; % degrees/second
+spinY = 1.5; % degrees/second
+spinZ = 1.5; % degrees/second
 
 % internal average power dissipation
 constantHeat = 1.3; % W
@@ -13,7 +16,8 @@ constantHeat = 1.3; % W
 scarea = 0.00318; % m^2
 % solar cells conversion efficiency
 % use 0.298 for AzurSpace TJ30C solar cells
-efficiency = 0.25;
+% efficiency = 0.25;
+efficiency = 0.298;
 
 % axis definition: X+ X- Y+ Y- Z+ Z-
 % [1 1 1 1 0 0] means that the satellite has 1 solar cell on the
@@ -23,7 +27,7 @@ efficiency = 0.25;
 sa = [2 2 2 2 2 2] * scarea;
 SolarArray = 0.106 * 0.106 * [1 1 1 1 1 1];
 % thicknessSolarArray = 1e-3;
-thicknessSolarArray = 2.9e-3;
+thicknessSolarArray = 1.65e-3; %To have a 50g panel
 Nface = size(SolarArray,1)*size(SolarArray,2) ; %number of nodes for the faces
 sa_sum = sum([sa ; zeros(1,length(sa))]) ; %Used to compute surfaceSA
 
@@ -57,24 +61,24 @@ hc = (heatCAl * massSolarArray)';
 
 % absorbptivity of the solar panel surface (anodized alluminum)
 % alphaPanels = 0.5;
-alphaPanels = 0.38;
+alphaPanels = 0.42;
 % emissivity of the solar panel surface (anodized alluminum)
 % epsilonPanels = 0.8;
-epsilonPanels = 0.89;
+epsilonPanels = 0.8;
 % absorbptivity of AzurSpace solar cells
 % alphaSolarCells = 0.91;
-alphaSolarCells = 0.82;
+alphaSolarCells = 0.84;
 % emissivity of solar cells (from Emcore / ClydeSpace datasheet)
 % epsilonSolarCells = 0.85;
-epsilonSolarCells = 0.92;
+epsilonSolarCells = 0.90;
 
 t0 = 238;
 
-hcFR4 = heatCFR4 * 0.042 * 0.042 * 0.138 * densityFR4;
+hcFR4 = heatCFR4 * 0.096 * 0.096 * 0.0016 * 5 * 9.5 * densityFR4; %Volume adapted to have mass = 1.3kg
 hc = [hc; hcFR4];
 
 %payload conductance matrix
-payloadR  = 0.02 / (4 * 2.5e-3 *  2.5e-3 * pi * thermCsteel);
+payloadR  = 0.1 / (4 * 2.5e-3 *  2.5e-3 * pi * thermCBrass);
 
 SolverMatrix = diag(hc) / dt;
 
