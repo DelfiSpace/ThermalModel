@@ -22,6 +22,9 @@ efficiency = 0.25;
 % 2U CubeSat
 sa = [4 4 4 2 0 0] * scarea;
 SolarArray = 0.1 * [0.228 0.228 0.228 0.228 0.1 0.1];
+Nface = size(SolarArray,1)*size(SolarArray,2) ; %number of nodes for the faces
+sa_sum = sum([sa ; zeros(1,length(sa))]) ; %Used to compute surfaceSA
+
 % thicknessSolarArray = 1e-3;
 % thicknessSolarArray = 2.9e-3;
 thicknessSolarArray = 2e-3;
@@ -38,6 +41,9 @@ volumeSolarArray = SolarArray * thicknessSolarArray;
 
 % area not covered by solar cells
 panelarea = SolarArray - sa;
+panelarea_sum = sum([panelarea ; zeros(1,length(panelarea))]) ; %Used to compute surfaceSP
+sa = reshape(sa, 1, size(sa,1)*size(sa,2));
+panelarea = reshape(panelarea, 1, size(panelarea,1)*size(panelarea,2));
 % make sure the panel area cannot be negative
 if any(sum(panelarea < 0) ~= 0)
     error('One element of panel area is negative')
@@ -73,28 +79,28 @@ payloadR  = 0.02 / (4 * 2.5e-3 *  2.5e-3 * pi * thermCsteel);
 SolverMatrix = diag(hc) / dt;
 
 % thermal conductance between X+ and the other faces
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 -1 0 0 0], tcLongSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 0 -1 0 0], tcLongSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 0 0 -1 0], tcShortSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [1 0 0 0 0 -1], tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 3, tcLongSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 4, tcLongSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 5, tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 6, tcShortSide);
 
 % thermal conductance between X- and the remaining faces
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 -1 0 0 0], tcLongSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 0 -1 0 0], tcLongSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 0 0 -1 0], tcShortSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 1 0 0 0 -1], tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 3, tcLongSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 4, tcLongSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 5, tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 6, tcShortSide);
 
 % thermal conductance between Y+ and the remaining faces
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 1 0 -1 0], tcShortSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 1 0 0 -1], tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 5, tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 6, tcShortSide);
 
 % thermal conductance between Y- and the remaining faces
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 1 -1 0], tcShortSide);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 1 0 -1], tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 5, tcShortSide);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 6, tcShortSide);
 
 % thermal conductance between the payload and the Z+ and Z- faces
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 1 0 -1], payloadR);
-SolverMatrix = addThermalConnection(SolverMatrix, [0 0 0 0 0 1 -1], payloadR);
+SolverMatrix = addThermalConnection(SolverMatrix, 5, 7, payloadR);
+SolverMatrix = addThermalConnection(SolverMatrix, 6, 7, payloadR);
 
 % calculate the effective absorbing and emitting area (weighted by the
 % absorption and emission coefficients)
