@@ -8,9 +8,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % satellite spin rates per axis
-spinX = 0; % degrees/second
-spinY = 0; % degrees/second
-spinZ = 0; % degrees/second
+spinX = 1.25; % degrees/second
+spinY = 1.25; % degrees/second
+spinZ = 1.25; % degrees/second
+
+%% Satellite properties
 
 % internal average power dissipation (per payload node)
 constantHeat = [0.7/3 ; 0.7*2/3]; % W
@@ -121,6 +123,8 @@ payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * th
 
 SolverMatrix = diag(hc) / dt;
 
+%% Thermal Links
+
 % Node definition for the model with 5 nodes per face: 
 % X+=1:5 X-=6:10 Y+=11:15 Y-=16:20 Z+=21:25 Z-=26:30 
 % Payload1=31 Payload2=32 TopRing=33 MiddleRing=34 BottomRing=35
@@ -170,10 +174,10 @@ SolverMatrix = addThermalConnection(SolverMatrix, 30, 35, ThermalResistanceTop_e
 % thermal conductance between the payload and the metal struts
 SolverMatrix = addThermalConnection(SolverMatrix, 31, 33, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 SolverMatrix = addThermalConnection(SolverMatrix, 31, 34, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-SolverMatrix = addThermalConnection(SolverMatrix, 31, 35, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
+%SolverMatrix = addThermalConnection(SolverMatrix, 31, 35, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 
 % thermal conductance between the payload and the metal struts
-SolverMatrix = addThermalConnection(SolverMatrix, 32, 33, payloadR*payloadRB/(payloadR + payloadRB));
+%SolverMatrix = addThermalConnection(SolverMatrix, 32, 33, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 34, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 35, payloadR*payloadRB/(payloadR + payloadRB));
 

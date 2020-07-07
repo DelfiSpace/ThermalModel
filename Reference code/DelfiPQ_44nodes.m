@@ -15,6 +15,8 @@ spinZ = 2.2654; % degrees/second
 % spinY = 0; % degrees/second
 % spinZ = 0; % degrees/second
 
+%% Satellite properties
+
 % internal average power dissipation (per payload node)
 constantHeat = [0.7/3 ; 0.7*2/3]; % W
 
@@ -58,19 +60,22 @@ contactWidth = 1e-3;
 
 % Thermal Resistances
 %ThermalResistanceTopPlate =      0.001 / (0.05 * 0.007 * thermCAl);
-ThermalResistanceTopPlate_middle = 10*   (0.05/2) / (0.05 * 0.007 * thermCAl);
+ThermalResistanceTopPlate_middle =    (0.05/2) / (0.05 * 0.007 * thermCAl); %wrong
 
-ThermalResistanceMiddlePlate_edge =  10*  0.002 / (0.05 * 0.01 * thermCAl);
-ThermalResistanceMiddlePlate_center = 10* (0.05/2) / (0.05 * 0.01 * thermCAl);
+ThermalResistanceMiddlePlate_edge =    0.002 / (0.05 * 0.01 * thermCAl);
+ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.05 * 0.01 * thermCAl); %wrong
 
-ThermalResistanceTop_edge =   10*    0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); 
-ThermalResistanceTop_center =  10*   (0.05/sqrt(2)) / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl);
+ThermalResistanceTop_edge =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); 
+ThermalResistanceTop_center =     (0.05/sqrt(2)) / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl);
 
-ThermalResistanceInside_long = 10*(0.178/2) / (0.05 * thicknessSolarArray * thermCAl) ;
-ThermalResistanceInside_short = 10*(0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ;
+ThermalResistanceInside_long = (0.178/2) / (0.05 * thicknessSolarArray * thermCAl) ;
+ThermalResistanceInside_short = (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ;
 
-ThermalResistanceInsideTOP_long = 10* 0.05 / (0.05*0.5 * thicknessSolarArray * thermCAl) ;
-ThermalResistanceInsideTOP_short = 10*(0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) ;
+ThermalResistanceInsideTOP_long =  0.05 / (0.05*0.5 * thicknessSolarArray * thermCAl) ;
+ThermalResistanceInsideTOP_short = (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) ;
+
+ThermalResistanceInsideRing_Top = 0.05 / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceInsideRing_Middle = 0.05 / (0.008 * 0.002 * thermCAl) ;
 
 % tcLongSide  = 0.05  / (0.178 * thicknessSolarArray * thermCAl);
 % tcShortSide  = (0.178/2 + 0.05/2)  / (0.05 * thicknessSolarArray * thermCAl);
@@ -123,11 +128,13 @@ hc = [hc; hcFR4; hcFR4; heatCAl*0.0103/4 * ones(4,1); heatCAl*0.034* ones(4,1); 
 % payloadRB  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl); %tube
 % payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK); %tube
 
-payloadR  =  10*0.007 / (1e-3 *  1e-3 * pi * thermCsteel); 
-payloadRB  =  10*0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl); %tube
-payloadRPEEK  = 10* 0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK); %tube
+payloadR  =  0.007 / (1e-3 *  1e-3 * pi * thermCsteel); 
+payloadRB  =  0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl); %tube
+payloadRPEEK  =  0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK); %tube
 
 SolverMatrix = diag(hc) / dt;
+
+%% Thermal Links
 
 % Node definition for the model with 5 nodes per face: 
 % X+=1:5 X-=6:10 Y+=11:15 Y-=16:20 Z+=21:25 Z-=26:30 
@@ -222,10 +229,22 @@ SolverMatrix = addThermalConnection(SolverMatrix, 32, 43, payloadR*payloadRB/(pa
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 44, payloadR*payloadRB/(payloadR + payloadRB));
 
 % thermal conductance between the nodes of the top ring
+SolverMatrix = addThermalConnection(SolverMatrix, 33, 34, ThermalResistanceInsideRing_Top);
+SolverMatrix = addThermalConnection(SolverMatrix, 34, 35, ThermalResistanceInsideRing_Top);
+SolverMatrix = addThermalConnection(SolverMatrix, 35, 36, ThermalResistanceInsideRing_Top);
+SolverMatrix = addThermalConnection(SolverMatrix, 36, 33, ThermalResistanceInsideRing_Top);
 
 % thermal conductance between the nodes of the middle ring
+SolverMatrix = addThermalConnection(SolverMatrix, 37, 38, ThermalResistanceInsideRing_Middle);
+SolverMatrix = addThermalConnection(SolverMatrix, 38, 39, ThermalResistanceInsideRing_Middle);
+SolverMatrix = addThermalConnection(SolverMatrix, 39, 40, ThermalResistanceInsideRing_Middle);
+SolverMatrix = addThermalConnection(SolverMatrix, 40, 37, ThermalResistanceInsideRing_Middle);
 
 % thermal conductance between the nodes of the bottom ring
+SolverMatrix = addThermalConnection(SolverMatrix, 41, 42, ThermalResistanceInsideRing_Top);
+SolverMatrix = addThermalConnection(SolverMatrix, 42, 43, ThermalResistanceInsideRing_Top);
+SolverMatrix = addThermalConnection(SolverMatrix, 43, 44, ThermalResistanceInsideRing_Top);
+SolverMatrix = addThermalConnection(SolverMatrix, 44, 41, ThermalResistanceInsideRing_Top);
 
 % thermal conductance between the nodes of X+
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 2, ThermalResistanceInside_long);

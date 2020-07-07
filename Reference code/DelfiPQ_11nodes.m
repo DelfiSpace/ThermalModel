@@ -12,6 +12,8 @@ spinX = 18.9; % degrees/second
 spinY = 1.2345; % degrees/second
 spinZ = 2.2654; % degrees/second
 
+%% Satellite properties
+
 % internal average power dissipation (per payload node)
 constantHeat = [0.7/3 ; 0.7*2/3]; % W
 
@@ -43,8 +45,8 @@ sa_sum = sum([sa ; zeros(1,length(sa))]) ; %Used to compute surfaceSA
 
 thicknessSolarArray = 1.6e-3;
 
-
 contactWidth = 1e-3;
+
 ThermalResistanceTopPlate =      0.001 / (0.05 * 0.007 * thermCAl);
 ThermalResistanceMiddlePlate =    0.002 / (0.05 * 0.01 * thermCAl);
 ThermalResistanceTop =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl);
@@ -101,9 +103,12 @@ payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * th
 
 SolverMatrix = diag(hc) / dt;
 
-% thermal conductance between X+ and the metal structs
+%% Thermal Links
+
 % Node definition for the model with 1 node per face: 
 % X+=1 X-=2 Y+=3 Y-=4 Z+=5 Z-=6 Payload1=7 Payload2=8 TopRing=9 MiddleRing=10 BottomRing=11
+
+% thermal conductance between X+ and the metal structs
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 9, ThermalResistanceTopPlate);
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 10, ThermalResistanceMiddlePlate);
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 11, ThermalResistanceTopPlate);
@@ -132,10 +137,10 @@ SolverMatrix = addThermalConnection(SolverMatrix, 6, 11, ThermalResistanceTop);
 % thermal conductance between the payload and the metal struts
 SolverMatrix = addThermalConnection(SolverMatrix, 7, 9, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 SolverMatrix = addThermalConnection(SolverMatrix, 7, 10, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-SolverMatrix = addThermalConnection(SolverMatrix, 7, 11, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
+%SolverMatrix = addThermalConnection(SolverMatrix, 7, 11, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 
 % thermal conductance between the payload and the metal struts
-SolverMatrix = addThermalConnection(SolverMatrix, 8, 9, payloadR*payloadRB/(payloadR + payloadRB));
+%SolverMatrix = addThermalConnection(SolverMatrix, 8, 9, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 8, 10, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 8, 11, payloadR*payloadRB/(payloadR + payloadRB));
 
