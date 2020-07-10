@@ -1,6 +1,8 @@
 
 % plot the total input heat over the orbits
 
+figure
+
 subplot(2,3,1)
 plot(inputT(1,:))
 title('input X')
