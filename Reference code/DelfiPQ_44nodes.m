@@ -61,15 +61,15 @@ contactWidth = 1e-3;
 % Thermal Resistances
 % ThermalResistanceTopPlate_middle =    (0.05/2) / (0.05 * 0.007 * thermCAl); %wrong
 % ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 0.001/(0.05 * 0.007 * thermCAl);
-ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 1/0.1;
+ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 1/0.35;
 
 % ThermalResistanceMiddlePlate_edge =    0.002 / (0.05 * 0.01 * thermCAl);
-ThermalResistanceMiddlePlate_edge =    1/0.1;
+ThermalResistanceMiddlePlate_edge =    1/0.35;
 %ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.05 * 0.01 * thermCAl); %wrong
 ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + ThermalResistanceMiddlePlate_edge; 
 
 % ThermalResistanceTop_edge =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); 
-ThermalResistanceTop_edge =       1/0.1; 
+ThermalResistanceTop_edge =       1/0.35; 
 %ThermalResistanceTop_center =     (0.05/sqrt(2)) / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); %wrong
 ThermalResistanceTop_center =     (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) + ThermalResistanceTop_edge;
 

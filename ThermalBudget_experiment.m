@@ -3,7 +3,7 @@
 %
 % Author: Stefano Speretta <s.speretta@tudelft.nl> 
 %
-%close all
+% close all
 clearvars
 clc
 
@@ -99,7 +99,7 @@ for h = 2 : points
     heat(1:Nface,h) = heat(1:Nface,h) - panelarea' * sigma * epsilonPanels .* (t(1:Nface, h - 1).^4 - t_outside.^4);
     
     % air convection
-    t_outside(1:5,1) = t_outside(1:5,1) + h_conv*10e-4*(200-T0 - t_outside(1:5,1)) ; %air between the lamp and X+
+    t_outside(1:5,1) = t_outside(1:5,1) + dt*10.27*5e-4*(400-T0 - t_outside(1:5,1)) / (1004*1.292*0.178*0.05*1) ; %air between the lamp and X+
     heat(1:Nface,h) = heat(1:Nface,h) - h_conv .* sa' .* (t(1:Nface, h - 1) - t_outside) ;
 
     % only take into account the lines that describe states (that also have
@@ -170,7 +170,49 @@ end
 grid on
 legend([leg; legPayload])
 %legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload 1', 'Payload2', 'Top', 'Middle', 'Bottom');
-title('Thermal Simulation')
+title('Thermal Simulation - Experiment')
 xlabel('Time - s')
 ylabel('Temperature - degC')
 %axis tight
+
+% figure
+% hold on
+% for i=1:5
+%     plot(t(i,range)+T0, 'LineWidth', 2)
+% end
+% legend('1','2','3','4','5')
+% 
+% figure
+% hold on
+% for i=6:10
+%     plot(t(i,range)+T0, 'LineWidth', 2)
+% end
+% legend('1','2','3','4','5')
+% 
+% figure
+% hold on
+% for i=11:15
+%     plot(t(i,range)+T0, 'LineWidth', 2)
+% end
+% legend('1','2','3','4','5')
+% 
+% figure
+% hold on
+% for i=16:20
+%     plot(t(i,range)+T0, 'LineWidth', 2)
+% end
+% legend('1','2','3','4','5')
+% 
+% figure
+% hold on
+% for i=21:25
+%     plot(t(i,range)+T0, 'LineWidth', 2)
+% end
+% legend('1','2','3','4','5')
+% 
+% figure
+% hold on
+% for i=26:30
+%     plot(t(i,range)+T0, 'LineWidth', 2)
+% end
+% legend('1','2','3','4','5')

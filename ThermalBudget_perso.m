@@ -5,7 +5,7 @@
 %
 % Author: Stefano Speretta <s.speretta@tudelft.nl> 
 %
-close all
+%close all
 clearvars
 clc
 
@@ -19,16 +19,17 @@ LoadIllumination_perso;
 
 % load satellite configuration
 % pocketqube3U_perso;
-funcube;
+% funcube;
 % DelfiPQ_11nodes;
 % DelfiPQ_35nodes;
-% DelfiPQ_44nodes;
+DelfiPQ_44nodes;
 % QB50_P1;
 
 
 points = size(inputE, 2);
 
 t0 = 4.2 - T0;
+t_outside = 0;
 
 b = zeros(size(SolverMatrix, 2), points);
 states = zeros(size(SolverMatrix, 1), points);
@@ -36,6 +37,7 @@ states = zeros(size(SolverMatrix, 1), points);
 t = zeros(length(hc), points);
 t(:,1) = t0;
 t(Nface+1,1) = 17-T0;
+
 % 3-axis rotation angles (all initialized to 0)
 xAngle = 0;
 yAngle = 0;
@@ -85,11 +87,11 @@ for h = 2 : points
     surfaceSP(:,h) = rotateZ(rotateY(rotateX(panelarea_sum, xAngle), yAngle), zAngle)';
     
     % subtract the heat radiated (Stefan Boltzman law) by the solar cells
-    heat(1:Nface,h) = heat(1:Nface,h) - sa' * sigma * epsilonSolarCells .* t(1:Nface, h - 1).^4;
+    heat(1:Nface,h) = heat(1:Nface,h) - sa' * sigma * epsilonSolarCells .* (t(1:Nface, h - 1).^4 - t_outside^4);
     
     % subtract the heat radiated (Stefan Boltzman law) by the rest of the
     % solar panel area
-    heat(1:Nface,h) = heat(1:Nface,h) - panelarea' * sigma * epsilonPanels .* t(1:Nface, h - 1).^4;
+    heat(1:Nface,h) = heat(1:Nface,h) - panelarea' * sigma * epsilonPanels .* (t(1:Nface, h - 1).^4 - t_outside^4);
 
     % only take into account the lines that describe states (that also have
     % an incoming heat)
