@@ -61,15 +61,15 @@ contactWidth = 1e-3;
 % Thermal Resistances
 % ThermalResistanceTopPlate_middle =    (0.05/2) / (0.05 * 0.007 * thermCAl); %wrong
 % ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 0.001/(0.05 * 0.007 * thermCAl);
-ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 1/0.35;
+ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 1/0.7;
 
 % ThermalResistanceMiddlePlate_edge =    0.002 / (0.05 * 0.01 * thermCAl);
-ThermalResistanceMiddlePlate_edge =    1/0.35;
+ThermalResistanceMiddlePlate_edge =    1/0.7;
 %ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.05 * 0.01 * thermCAl); %wrong
 ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + ThermalResistanceMiddlePlate_edge; 
 
 % ThermalResistanceTop_edge =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); 
-ThermalResistanceTop_edge =       1/0.35; 
+ThermalResistanceTop_edge =       1/0.7; 
 %ThermalResistanceTop_center =     (0.05/sqrt(2)) / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); %wrong
 ThermalResistanceTop_center =     (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) + ThermalResistanceTop_edge;
 
@@ -131,9 +131,9 @@ hc = [hc; hcFR4; hcFR4; heatCAl*0.0103/4 * ones(4,1); heatCAl*0.034* ones(4,1); 
 % payloadRB  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl); %tube
 % payloadRPEEK  = 0.007 / (4 * ((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK); %tube
 
-payloadR  =  0.007 / (1e-3 *  1e-3 * pi * thermCsteel); 
-payloadRB  =  0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl); %tube
-payloadRPEEK  =  0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK); %tube
+payloadR  =  0.007 / (1e-3 *  1e-3 * pi * thermCsteel) + 1/0.35; 
+payloadRB  =  0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCAl) + 1/0.35; %tube
+payloadRPEEK  =  0.007 / (((2.5e-3 * 2.5e-3 * pi) - (1e-3 *  1e-3 * pi)) * thermCPEEK) + 1/0.35; %tube
 
 SolverMatrix = diag(hc) / dt;
 

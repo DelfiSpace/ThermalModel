@@ -99,8 +99,9 @@ for h = 2 : points
     heat(1:Nface,h) = heat(1:Nface,h) - panelarea' * sigma * epsilonPanels .* (t(1:Nface, h - 1).^4 - t_outside.^4);
     
     % air convection
-    t_outside(1:5,1) = t_outside(1:5,1) + dt*10.27*5e-4*(400-T0 - t_outside(1:5,1)) / (1004*1.292*0.178*0.05*1) ; %air between the lamp and X+
-    heat(1:Nface,h) = heat(1:Nface,h) - h_conv .* sa' .* (t(1:Nface, h - 1) - t_outside) ;
+    t_outside(1:5,1) = (400-T0 + t(1:5, h-1))/2 ;
+    heat_coef = h_conv( abs(t(1:Nface,h-1)-t_outside) , 0.178) ; %heat transfer coefficient
+    heat(1:Nface,h) = heat(1:Nface,h) + heat_coef .* sa' .* (t_outside - t(1:Nface, h - 1)) ;
 
     % only take into account the lines that describe states (that also have
     % an incoming heat)
@@ -142,13 +143,15 @@ end
 
 range = 1:size(t, 2);
 
-plotAverage = mean(t(Nface+1,range))+T0
+Delta_T = t(1,end) - t(6,end)
+
+plotAverage = mean(t(Nface+1,range))+T0;
 
 avgHpower = avgHpower / points;
 avgSurfaceSA = mean(sum(surfaceSA, 1));
 avgSurfaceSP = mean(sum(surfaceSP, 1));
 equilibriumT = ((avgHpower + sum(constantHeat)) / (epsilonSolarCells * avgSurfaceSA + ...
-    epsilonPanels * avgSurfaceSP) / sigma).^(1/4) + T0
+    epsilonPanels * avgSurfaceSP) / sigma).^(1/4) + T0;
 
 figure
 plot(t(1,range)+T0, 'LineWidth', 2)
