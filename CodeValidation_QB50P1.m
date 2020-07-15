@@ -21,7 +21,7 @@ for i=0:700
 end
 
 
-a = 43840:43840+length(date_test)-1 ; %05/06/2015
+a = 39817:39817+length(date_test)-1 ; %05/06/2015
 plot(date_test, t(1,a)+T0, 'b', 'LineWidth', 2)
 plot(date_test, t(2,a)+T0, 'c', 'LineWidth', 2)
 plot(date_test, t(3,a)+T0, 'g', 'LineWidth', 2)

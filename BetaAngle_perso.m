@@ -10,7 +10,7 @@ epsilon = 23.44 *pi/180 ; %Oblicity of the ecliptic (in rad)
 % Ecliptic true solar longitude (in rad)
 % day=78: vernal equinox (gamma=0°)
 if day>=78
-    gamma = (day-78)*0.986 *pi/180 ; %gamma increases of 0.986/day
+    gamma = (day-78)*0.986 *pi/180 ; %gamma increases of 0.986°/day
 else
     gamma = (365-78+day)*0.986 *pi/180 ;
 end

@@ -6,6 +6,7 @@
 day = 4 ;
 year = 2016 ;
 month = 2 ; 
+day = 35;
 
 % Orbital parameters
 Mean_anomaly = 283.694 *pi/180 ; %Mean anomaly of funcube at the begining 
@@ -20,6 +21,7 @@ beta = BetaAngle_perso(35,RAAN,i) ; %beta angle (in rad)
 % day = 7 ;
 % year = 2015 ;
 % month = 5 ; 
+% day = 127 ;
 % 
 % % Orbital parameters
 % h = 604.2E3 ; %altitude (m)

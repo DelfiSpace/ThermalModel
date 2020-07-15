@@ -34,8 +34,8 @@ contactWidth = 1e-3;
 %tcLongSide  = thicknessSolarArray / (0.178 * contactWidth * thermCAl);
 %tcShortSide = thicknessSolarArray / (0.05  * contactWidth * thermCAl);
 
-tcLongSide  = 0.1  / (0.228 * thicknessSolarArray * thermCAl);
-tcShortSide  = (0.228/2 + 0.1/2)  / (0.1 * thicknessSolarArray * thermCAl);
+tcLongSide  = 0.1  / (0.228 * thicknessSolarArray * thermCAl) +1/0.6;
+tcShortSide  = (0.228/2 + 0.1/2)  / (0.1 * thicknessSolarArray * thermCAl) +1/0.6;
 
 volumeSolarArray = SolarArray * thicknessSolarArray;
 

@@ -5,6 +5,6 @@ function Flux = AlbedoFlux_perso(day, beta, teta, albedo)
 % teta = orbit angle
 % albedo = fraction of sunligth reflected
 
-Flux = albedo*SolarFlux_perso(day)*cos(beta)*cos(teta);
+Flux = albedo*SolarFlux_perso(day).*cos(beta).*cos(teta);
 
 end
