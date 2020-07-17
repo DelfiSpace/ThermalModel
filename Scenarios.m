@@ -25,7 +25,6 @@ while(true)
 end
 fclose(fid);
 
-% Find the coldest case scenario
 i = 97.004 *pi/180 ; %inclination (in rad)
 h = 630E3 ; %altitude
 Mean_anomaly = 283.694 *pi/180 ;
@@ -78,21 +77,37 @@ T_orbit = floor(2*pi*sqrt((Re+h)^3/(G*Me))) ; %orbit period
 teta1 = Mean_anomaly:2*pi/(T_orbit):2*pi*orbit+Mean_anomaly ;
 teta1 = mod(teta1,2*pi) ;
 
+x = zeros(length(teta1), 1) ;
+xm = zeros(length(teta1), 1) ;
+y = zeros(length(teta1), 1) ;
+ym = zeros(length(teta1), 1) ;
+z = zeros(length(teta1), 1) ;
+zm = zeros(length(teta1), 1) ;
+
+spinX = 18.9; % degrees/second
+spinY = 1.2345; % degrees/second
+spinZ = 2.2654; % degrees/second
+
+xAngle = 0;
+yAngle = 0;
+zAngle = 0;
+
 for k=1:length(beta_vec)
     disp(k)
     beta = beta_vec(k,1) ;
     day = DAY(k,1) ;
+    
+    xAngle = 0;
+    yAngle = 0;
+    zAngle = 0;
 
     % Incoming flux on the satellite faces
 
-    x = zeros(length(teta1), 1) ;
-    xm = zeros(length(teta1), 1) ;
-    y = zeros(length(teta1), 1) ;
-    ym = zeros(length(teta1), 1) ;
-    z = zeros(length(teta1), 1) ;
-    zm = zeros(length(teta1), 1) ;
-
     for i=1:length(teta1)
+       xAngle = xAngle + spinX;
+       yAngle = yAngle + spinY;
+       zAngle = zAngle + spinZ;
+    
        [temp1, temp2, temp3] = HeatReceived_perso(day,beta,teta1(i),h,pol_X,azi_X,0.3) ;
        x(i,1) = temp1+temp2+temp3 ;
 
@@ -110,15 +125,31 @@ for k=1:length(beta_vec)
 
        [temp1, temp2, temp3] = HeatReceived_perso(day,beta,teta1(i),h,pol_Zm,azi_Zm,0.3) ;
        zm(i,1) = temp1+temp2+temp3 ;
+       
+       TEMP = rotateZ(rotateY(rotateX([x(i,1) xm(i,1) y(i,1) ym(i,1) z(i,1) zm(i,1)], xAngle), yAngle), zAngle);
+       x(i,1) = TEMP(1) ;
+       xm(i,1) = TEMP(2) ;
+       y(i,1) = TEMP(3) ;
+       ym(i,1) = TEMP(4) ;
+       z(i,1) = TEMP(5) ;
+       zm(i,1) = TEMP(6) ;
     end
 
     inputT = [ x(:,1)'; xm(:,1)'; 
                 y(:,1)'; ym(:,1)'; 
                 z(:,1)'; zm(:,1)'  ];
+            
     
     illumination(k,1) = sum(sum(inputT,2)) ;
 end
 
-indice = find(illumination == min(illumination)) ;
+% Find the cold case scenario
+range = find(beta_vec<1.1519) ;
+indice = find(illumination(range,1) == min(illumination(range,1))) ;
 beta_cold = beta_vec(indice) ;
 DAY_cold = DAY(indice) ;
+
+% Find the hot case scenario
+indice2 = find(illumination == max(illumination)) ;
+beta_hot = beta_vec(indice2) ;
+DAY_hot = DAY(indice2) ;

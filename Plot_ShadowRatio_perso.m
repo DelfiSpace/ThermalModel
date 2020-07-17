@@ -1,11 +1,16 @@
 
 % Validation of the computation of eclipse time
 
+inclinaition = 97.8 *pi/180 ;
+h = 408E3 ;
+% inclinaition = 97.004 *pi/180 ;
+% h = 630E3 ;
+
 close all
 beta=0:90;
 ratio=zeros(0,90);
 for i=beta
-    [temp1,temp2,temp3]=EclipseTime_perso(i*pi/180,97.8,408E3);
+    [temp1,temp2,temp3]=EclipseTime_perso(i*pi/180,inclinaition,h);
     ratio(i+1)=temp2;
 end
 % Points from slide39 part 3 of the lecture

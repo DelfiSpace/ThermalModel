@@ -2,19 +2,19 @@
 % Satellite orbital parameters
 
 %% Funcube
-%Day of the simulation
-day = 4 ;
-year = 2016 ;
-month = 2 ; 
-day = 35;
-
-% Orbital parameters
-Mean_anomaly = 283.694 *pi/180 ; %Mean anomaly of funcube at the begining 
-h = 630E3 ; %altitude
-LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
-RAAN = 94.3150 *pi/180 ;
-i = 97.004 *pi/180 ; %inclination (in rad)
-beta = BetaAngle_perso(35,RAAN,i) ; %beta angle (in rad)
+% %Day of the simulation
+% day = 4 ;
+% year = 2016 ;
+% month = 2 ; 
+% day = 35;
+% 
+% % Orbital parameters
+% Mean_anomaly = 283.694 *pi/180 ; %Mean anomaly of funcube at the begining 
+% h = 630E3 ; %altitude
+% LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
+% RAAN = 94.3150 *pi/180 ;
+% i = 97.004 *pi/180 ; %inclination (in rad)
+% beta = BetaAngle_perso(35,RAAN,i) ; %beta angle (in rad)
 
 %% QB50 P1
 % % Day of the simulation
@@ -31,6 +31,43 @@ beta = BetaAngle_perso(35,RAAN,i) ; %beta angle (in rad)
 % i = 97.96 *pi/180 ; %inclination (in rad)
 % beta = BetaAngle_perso(127,RAAN,i) ; %beta angle (in rad)
 % % beta=pi/2;
+
+%% DelfiPQ Cold case scenario
+% %Day of the simulation
+% day = 4 ;
+% year = 2019 ;
+% month = 10 ; 
+% day = 277 ;
+% 
+% % day = 1 ;
+% % year = 2014 ;
+% % month = 7 ;
+% % day = 182 ;
+% 
+% % Orbital parameters
+% Mean_anomaly = 326.0640 *pi/180 ; %Mean anomaly of funcube at the begining
+% %Mean_anomaly = 14.78336100 *pi/180 ;
+% h = 630E3 ; %altitude
+% LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
+% RAAN = 287.2153 *pi/180 ;
+% i = 97.004 *pi/180 ; %inclination (in rad)
+% beta = 1.5405 ; %beta angle for the coldest scenario (in rad)
+% %beta=0.4428 ;
+
+%% DelfiPQ hot case scenario
+%Day of the simulation
+day = 26 ;
+year = 2018 ;
+month = 1 ; 
+day = 26 ;
+
+% Orbital parameters
+Mean_anomaly = 105.0112 *pi/180 ; %Mean anomaly of funcube at the begining
+h = 630E3 ; %altitude
+LTAN = 10+30/60+0/3600 ; %Local time of the ascending node (for sun synchronous orbit) (in hours)
+RAAN = 63.9847 *pi/180 ;
+i = 97.004 *pi/180 ; %inclination (in rad)
+beta = 1.1448 ; %beta angle for the coldest scenario (in rad)
 
 %% Initial orientation of the satellite faces
 pol_X = pi/2 ; %nadir facing plate
