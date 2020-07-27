@@ -1,4 +1,4 @@
-% Thermal budget simulator for the experiment: X+ face heated by a lamp in
+% Thermal budget simulator for the experiment: Y- face heated by a lamp in
 % a room (radiation + convection)
 %
 % Author: Stefano Speretta <s.speretta@tudelft.nl> 
@@ -16,12 +16,7 @@ constants_perso;
 LoadExperiment
 
 % load satellite configuration
-% pocketqube3U_perso;
-% funcube;
-% DelfiPQ_11nodes;
-% DelfiPQ_35nodes;
-DelfiPQ_44nodes;
-% QB50_P1;
+DelfiPQ_experiment
 
 spinX = 0; % degrees/second
 spinY = 0; % degrees/second
@@ -33,7 +28,7 @@ points = size(inputE, 2);
 
 t0 = 24.6 - T0 ; %for the experiment
 t_outside = ones(Nface,1) ; %for the experiment
-t_outside(1:end,1) = 20-T0 ;
+t_outside(1:end,1) = 24.6-T0 ;
 t_lamp = (3200-T0) * ones(1,Nface/6) ;
 
 b = zeros(size(SolverMatrix, 2), points);
@@ -73,8 +68,8 @@ for h = 2 : points
 %     heat(1:Nface/6, h) = sigma * alphaSolarCells * (t_lamp.^4 - t(1:Nface/6).^4) * Form_factor(h,1) .*sa(1:Nface/6) ...
 %                       + sigma * alphaPanels * (t_lamp.^4 - t(1:Nface/6).^4) * Form_factor(h,1) .* panelarea(1:Nface/6);
     %emissivity of thungsten : 0.35
-    heat(1:Nface/6, h) = sigma * alphaSolarCells*0.35 * (t_lamp.^4 - t(1:Nface/6).^4) * Form_factor(h,1) .*sa(1:Nface/6) ...
-                      + sigma * alphaPanels*0.35 * (t_lamp.^4 - t(1:Nface/6).^4) * Form_factor(h,1) .* panelarea(1:Nface/6);
+    heat(16:20, h) = sigma * alphaSolarCells*0.35 * (t_lamp.^4 - t(16:20).^4) * Form_factor(h,1) .*sa(16:20) ...
+                      + sigma * alphaPanels*0.35 * (t_lamp.^4 - t(16:20).^4) * Form_factor(h,1) .* panelarea(16:20);
     
     % keep track of the current position 
     xAngle = xAngle + spinX;
@@ -96,13 +91,14 @@ for h = 2 : points
     heat(1:Nface,h) = heat(1:Nface,h) - panelarea' * sigma * epsilonPanels .* (t(1:Nface, h - 1).^4 - t_outside.^4);
     
     % air convection
-    heat_coef = h_conv( abs(t(1:Nface,h-1)-t_outside) , 0.178) ; %heat transfer coefficient
+%     heat_coef = h_conv( abs(t(1:Nface,h-1)-t_outside) , 0.178) ; %heat transfer coefficient
+    heat_coef = [25*ones(5,1) ; 15*ones(25,1)] ;
     heat(1:Nface,h) = heat(1:Nface,h) + heat_coef .* sa' .* (t_outside - t(1:Nface, h - 1)) ;
     heat(1:Nface,h) = heat(1:Nface,h) + heat_coef .* panelarea' .* (t_outside - t(1:Nface, h - 1)) ;
     
-    % air conduction
-    heat(1:Nface,h) = heat(1:Nface,h) + 0.026 .* sa' .* (t_outside - t(1:Nface, h - 1)) / thicknessSolarArray ;
-    heat(1:Nface,h) = heat(1:Nface,h) + 0.026 .* panelarea' .* (t_outside - t(1:Nface, h - 1)) / thicknessSolarArray ;
+%     % air conduction
+%     heat(1:Nface,h) = heat(1:Nface,h) + 0.026 .* sa' .* (t_outside - t(1:Nface, h - 1)) / 1 ;
+%     heat(1:Nface,h) = heat(1:Nface,h) + 0.026 .* panelarea' .* (t_outside - t(1:Nface, h - 1)) / 1 ;
 
     % only take into account the lines that describe states (that also have
     % an incoming heat)
@@ -115,32 +111,6 @@ for h = 2 : points
 end
 
 %% Graphs
-if (0)
-
-figure
-plot(output(1, :));
-hold on
-plot(output(2, :), 'r')
-grid on
-title('X')
-%xlim([0 1000])
-
-figure
-plot(output(3, :));
-hold on
-plot(output(4, :), 'r')
-grid on
-title('Y')
-%xlim([0 1000])
-
-figure
-plot(output(5, :));
-hold on
-plot(output(6, :), 'r')
-grid on
-title('Z')
-%xlim([0 1000])
-end
 
 range = 1:size(t, 2);
 
@@ -167,7 +137,7 @@ figure
 plot(date,t(1,range)+T0, 'LineWidth', 2)
 hold on
 plot(date,t(1*Nface/6+1,range)+T0, 'r', 'LineWidth', 2)
-plot(date,t(2*Nface/6+1,range)+T0, 'g', 'LineWidth', 3)
+plot(date,t(2*Nface/6+1,range)+T0, 'g', 'LineWidth', 2)
 plot(date,t(3*Nface/6+1,range)+T0, 'k', 'LineWidth', 2)
 %plot(date,t(4*Nface/6+1,range)+T0, 'm', 'LineWidth', 2)
 %plot(date,t(5*Nface/6+1,range)+T0, 'c', 'LineWidth', 2)
@@ -176,10 +146,10 @@ plot(date,t(3*Nface/6+1,range)+T0, 'k', 'LineWidth', 2)
 ReadTelemetry
 
 date_exp = TelemetryEPS17072020(:,18) ;
-ym_exp = TelemetryEPS17072020(:,74) ;
-y_exp = TelemetryEPS17072020(:,59) ;
-xm_exp = TelemetryEPS17072020(:,19) ;
-x_exp = TelemetryEPS17072020(:,24) ;
+x_exp = TelemetryEPS17072020(:,74) ;
+xm_exp = TelemetryEPS17072020(:,59) ;
+y_exp = TelemetryEPS17072020(:,19) ;
+ym_exp = TelemetryEPS17072020(:,24) ;
 date_exp = date_exp{:,1} ;
 ym_exp = ym_exp{:,1} ;
 y_exp = y_exp{:,1} ;

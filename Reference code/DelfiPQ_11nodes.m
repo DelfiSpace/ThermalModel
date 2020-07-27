@@ -47,9 +47,24 @@ thicknessSolarArray = 1.6e-3;
 
 contactWidth = 1e-3;
 
-ThermalResistanceTopPlate =      0.001 / (0.05 * 0.007 * thermCAl);
-ThermalResistanceMiddlePlate =    0.002 / (0.05 * 0.01 * thermCAl);
-ThermalResistanceTop =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl);
+% ThermalResistanceTopPlate =      0.001 / (0.05 * 0.007 * thermCAl);
+% ThermalResistanceMiddlePlate =    0.002 / (0.05 * 0.01 * thermCAl);
+% ThermalResistanceTop =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl);
+
+ThermalResistanceTopPlate_Xp = (0.178/2) / (0.05*0.5 * thicknessSolarArray * thermCAl) ...
+                            + 1/0.4 + (0.05/2) / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceTopPlate_Y = (0.178/2) / (0.05*0.5 * thicknessSolarArray * thermCAl) ...
+                            + 1/0.4 + 0.05 / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceTopPlate_Xm = (0.178/2) / (0.05*0.5 * thicknessSolarArray * thermCAl) ...
+                            + 1/0.4 + 0.05 / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceMiddlePlate_Xp = (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ...
+                            +1/0.4 + (0.05/2) / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceMiddlePlate_Y = (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ...
+                            +1/0.4 + 0.05 / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceMiddlePlate_Xm = (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ...
+                            +1/0.4 + 0.05 / (0.008 * 0.001 * thermCAl) ;
+ThermalResistanceTop = (0.05/2) / (0.05 * thicknessSolarArray * thermCAl) ...
+                        +1/0.4 ;
 
 % tcLongSide  = 0.05  / (0.178 * thicknessSolarArray * thermCAl);
 % tcShortSide  = (0.178/2 + 0.05/2)  / (0.05 * thicknessSolarArray * thermCAl);
@@ -109,24 +124,24 @@ SolverMatrix = diag(hc) / dt;
 % X+=1 X-=2 Y+=3 Y-=4 Z+=5 Z-=6 Payload1=7 Payload2=8 TopRing=9 MiddleRing=10 BottomRing=11
 
 % thermal conductance between X+ and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, 1, 9, ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 1, 10, ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 1, 11, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 9, ThermalResistanceTopPlate_Xp);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 10, ThermalResistanceMiddlePlate_Xp);
+SolverMatrix = addThermalConnection(SolverMatrix, 1, 11, ThermalResistanceTopPlate_Xp);
 
 % thermal conductance between X- and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, 2, 9, ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 2, 10, ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 2, 11, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 9, ThermalResistanceTopPlate_Xm);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 10, ThermalResistanceMiddlePlate_Xm);
+SolverMatrix = addThermalConnection(SolverMatrix, 2, 11, ThermalResistanceTopPlate_Xm);
 
 % thermal conductance between Y+ and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, 3, 9, ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 3, 10, ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 3, 11, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 9, ThermalResistanceTopPlate_Y);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 10, ThermalResistanceMiddlePlate_Y);
+SolverMatrix = addThermalConnection(SolverMatrix, 3, 11, ThermalResistanceTopPlate_Y);
 
 % thermal conductance between Y- and the metal structs
-SolverMatrix = addThermalConnection(SolverMatrix, 4, 9, ThermalResistanceTopPlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 4, 10, ThermalResistanceMiddlePlate);
-SolverMatrix = addThermalConnection(SolverMatrix, 4, 11, ThermalResistanceTopPlate);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 9, ThermalResistanceTopPlate_Y);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 10, ThermalResistanceMiddlePlate_Y);
+SolverMatrix = addThermalConnection(SolverMatrix, 4, 11, ThermalResistanceTopPlate_Y);
 
 % thermal conductance between Z+ and the metal structs
 SolverMatrix = addThermalConnection(SolverMatrix, 5, 9, ThermalResistanceTop);

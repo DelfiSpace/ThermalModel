@@ -161,9 +161,9 @@ end
 grid on
 legend([leg; legPayload])
 %legend('X+', 'X-', 'Y+', 'Y-', 'Z+', 'Z-', 'Payload 1', 'Payload2', 'Top', 'Middle', 'Bottom');
-title('Thermal Simulation')
-xlabel('Time - s')
-ylabel('Temperature - degC')
+title('\fontsize{20}Thermal Simulation')
+xlabel('\fontsize{16}Time - s')
+ylabel('\fontsize{16}Temperature - degC')
 %axis tight
 
 

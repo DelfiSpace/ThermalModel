@@ -59,19 +59,16 @@ thicknessSolarArray = 1.7e-3;
 contactWidth = 1e-3;
 
 % Thermal Resistances
-% ThermalResistanceTopPlate_middle =    (0.05/2) / (0.05 * 0.007 * thermCAl); %wrong
 % ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 0.001/(0.05 * 0.007 * thermCAl);
-ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 1/0.6;
+ThermalResistanceTopPlate_middle =   (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + 1/0.4;
 
 % ThermalResistanceMiddlePlate_edge =    0.002 / (0.05 * 0.01 * thermCAl);
-ThermalResistanceMiddlePlate_edge =    1/0.6;
-%ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.05 * 0.01 * thermCAl); %wrong
-ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + ThermalResistanceMiddlePlate_edge; 
+ThermalResistanceMiddlePlate_edge =    1/0.4;
+%ThermalResistanceMiddlePlate_center =  (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) + ThermalResistanceMiddlePlate_edge; 
 
 % ThermalResistanceTop_edge =       0.001 / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); 
-ThermalResistanceTop_edge =       1/0.6; 
-%ThermalResistanceTop_center =     (0.05/sqrt(2)) / (((0.05 * 0.05) - (0.0304 * 0.034)) * thermCAl); %wrong
-ThermalResistanceTop_center =     (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) + ThermalResistanceTop_edge;
+ThermalResistanceTop_edge =       1/0.4; 
+%ThermalResistanceTop_center =     (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSolarArray * thermCAl) + ThermalResistanceTop_edge;
 
 ThermalResistanceInside_long = (0.178/2) / (0.05*0.5 * thicknessSolarArray * thermCAl) ;
 ThermalResistanceInside_short = (0.05/2) / (0.178*0.5 * thicknessSolarArray * thermCAl) ;
@@ -81,11 +78,6 @@ ThermalResistanceInsideTOP_short = (0.05/sqrt(2)) / (0.05/sqrt(2) * thicknessSol
 
 ThermalResistanceInsideRing_Top = 0.05 / (0.008 * 0.001 * thermCAl) ;
 ThermalResistanceInsideRing_Middle = 0.05 / (0.008 * 0.002 * thermCAl) ;
-
-% tcLongSide  = 0.05  / (0.178 * thicknessSolarArray * thermCAl);
-% tcShortSide  = (0.178/2 + 0.05/2)  / (0.05 * thicknessSolarArray * thermCAl);
-%tcLongSide  = 0.106  / (0.106 * thicknessSolarArray * thermCFR4);
-%tcShortSide  = (0.106/2 + 0.106/2)  / (0.106 * thicknessSolarArray * thermCAl);
 
 volumeSolarArray = SolarArray * thicknessSolarArray;
 
@@ -147,8 +139,6 @@ SolverMatrix = diag(hc) / dt;
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 33, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 1, 34, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 2, 37, ThermalResistanceMiddlePlate_edge);
-% SolverMatrix = addThermalConnection(SolverMatrix, 3, 37, ThermalResistanceMiddlePlate_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 3, 38, ThermalResistanceMiddlePlate_center);
 SolverMatrix = addThermalConnection(SolverMatrix, 4, 38, ThermalResistanceMiddlePlate_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 5, 41, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 5, 42, ThermalResistanceTopPlate_middle);
@@ -157,8 +147,6 @@ SolverMatrix = addThermalConnection(SolverMatrix, 5, 42, ThermalResistanceTopPla
 SolverMatrix = addThermalConnection(SolverMatrix, 6, 35, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 6, 36, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 7, 39, ThermalResistanceMiddlePlate_edge);
-% SolverMatrix = addThermalConnection(SolverMatrix, 8, 39, ThermalResistanceMiddlePlate_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 8, 40, ThermalResistanceMiddlePlate_center);
 SolverMatrix = addThermalConnection(SolverMatrix, 9, 40, ThermalResistanceMiddlePlate_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 10, 43, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 10, 44, ThermalResistanceTopPlate_middle);
@@ -167,8 +155,6 @@ SolverMatrix = addThermalConnection(SolverMatrix, 10, 44, ThermalResistanceTopPl
 SolverMatrix = addThermalConnection(SolverMatrix, 11, 34, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 11, 35, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 12, 38, ThermalResistanceMiddlePlate_edge);
-% SolverMatrix = addThermalConnection(SolverMatrix, 13, 38, ThermalResistanceMiddlePlate_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 13, 39, ThermalResistanceMiddlePlate_center);
 SolverMatrix = addThermalConnection(SolverMatrix, 14, 39, ThermalResistanceMiddlePlate_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 15, 42, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 15, 43, ThermalResistanceTopPlate_middle);
@@ -177,8 +163,6 @@ SolverMatrix = addThermalConnection(SolverMatrix, 15, 43, ThermalResistanceTopPl
 SolverMatrix = addThermalConnection(SolverMatrix, 16, 36, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 16, 33, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 17, 40, ThermalResistanceMiddlePlate_edge);
-% SolverMatrix = addThermalConnection(SolverMatrix, 18, 40, ThermalResistanceMiddlePlate_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 18, 37, ThermalResistanceMiddlePlate_center);
 SolverMatrix = addThermalConnection(SolverMatrix, 19, 37, ThermalResistanceMiddlePlate_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 20, 44, ThermalResistanceTopPlate_middle);
 SolverMatrix = addThermalConnection(SolverMatrix, 20, 41, ThermalResistanceTopPlate_middle);
@@ -186,20 +170,12 @@ SolverMatrix = addThermalConnection(SolverMatrix, 20, 41, ThermalResistanceTopPl
 % thermal conductance between Z+ and the metal structs
 SolverMatrix = addThermalConnection(SolverMatrix, 21, 33, ThermalResistanceTop_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 22, 34, ThermalResistanceTop_edge);
-% SolverMatrix = addThermalConnection(SolverMatrix, 23, 33, ThermalResistanceTop_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 23, 34, ThermalResistanceTop_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 23, 35, ThermalResistanceTop_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 23, 36, ThermalResistanceTop_center);
 SolverMatrix = addThermalConnection(SolverMatrix, 24, 35, ThermalResistanceTop_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 25, 36, ThermalResistanceTop_edge);
 
 % thermal conductance between Z- and the metal structs
 SolverMatrix = addThermalConnection(SolverMatrix, 26, 41, ThermalResistanceTop_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 27, 42, ThermalResistanceTop_edge);
-% SolverMatrix = addThermalConnection(SolverMatrix, 28, 41, ThermalResistanceTop_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 28, 42, ThermalResistanceTop_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 28, 43, ThermalResistanceTop_center);
-% SolverMatrix = addThermalConnection(SolverMatrix, 28, 44, ThermalResistanceTop_center);
 SolverMatrix = addThermalConnection(SolverMatrix, 29, 43, ThermalResistanceTop_edge);
 SolverMatrix = addThermalConnection(SolverMatrix, 30, 44, ThermalResistanceTop_edge);
 
@@ -212,16 +188,8 @@ SolverMatrix = addThermalConnection(SolverMatrix, 31, 37, payloadR*payloadRPEEK/
 SolverMatrix = addThermalConnection(SolverMatrix, 31, 38, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 SolverMatrix = addThermalConnection(SolverMatrix, 31, 39, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 SolverMatrix = addThermalConnection(SolverMatrix, 31, 40, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-% SolverMatrix = addThermalConnection(SolverMatrix, 31, 41, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-% SolverMatrix = addThermalConnection(SolverMatrix, 31, 42, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-% SolverMatrix = addThermalConnection(SolverMatrix, 31, 43, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
-% SolverMatrix = addThermalConnection(SolverMatrix, 31, 44, payloadR*payloadRPEEK/(payloadR + payloadRPEEK));
 
 % thermal conductance between the payload and the metal struts
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 33, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 34, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 35, payloadR*payloadRB/(payloadR + payloadRB));
-% SolverMatrix = addThermalConnection(SolverMatrix, 32, 36, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 37, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 38, payloadR*payloadRB/(payloadR + payloadRB));
 SolverMatrix = addThermalConnection(SolverMatrix, 32, 39, payloadR*payloadRB/(payloadR + payloadRB));
