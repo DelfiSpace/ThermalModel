@@ -170,9 +170,9 @@ leg = {'X+'; 'X-'; 'Y+'; 'Y-'} ;
 grid on
 %legend([leg; legPayload])
 legend(leg)
-title('Thermal Simulation - Experiment')
-xlabel('Time - s')
-ylabel('Temperature - degC')
+title('\fontsize{20}Thermal Simulation VS Experiment')
+xlabel('\fontsize{14}Time - s')
+ylabel('\fontsize{14}Temperature - degC')
 
 
 % figure
