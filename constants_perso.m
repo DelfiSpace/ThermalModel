@@ -37,3 +37,10 @@ thermCBrass = 110;       % W m^-1 K^-1
 
 % PEEK
 thermCPEEK = 0.25;       % W m^-1 K^-1
+
+% Battery
+heatBat = 1000 ;
+
+% Polycarbonate
+heatPoly = 1250 ; 
+thermPoly = 0.2 ; 

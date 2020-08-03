@@ -22,7 +22,8 @@ LoadIllumination_perso;
 % funcube;
 % DelfiPQ_11nodes;
 % DelfiPQ_35nodes;
-DelfiPQ_44nodes;
+% DelfiPQ_44nodes;
+DelfiPQ_53nodes;
 % QB50_P1;
 
 
@@ -54,7 +55,7 @@ heat(1:Nface, 1) =    alphaSolarCells * FitNumberNode(rotateZ(rotateY(rotateX(in
                 - FitNumberNode(rotateZ(rotateY(rotateX(inputE(:, 1)', xAngle), yAngle), zAngle)',Nface)' .* sa * efficiency ...
                 + alphaPanels * FitNumberNode(rotateZ(rotateY(rotateX(inputT(:, 1)', xAngle), yAngle), zAngle)',Nface)' .* panelarea;
 
-heat(7:7+length(constantHeat)-1,:) = constantHeat(:,1).* ones(length(constantHeat),size(heat,2)) ;
+heat(Nface:Nface+length(constantHeat)-1,:) = constantHeat(:,1).* ones(length(constantHeat),size(heat,2)) ;
 
 % create the arrays used to store the average surfaces
 % area covered by silar cells
